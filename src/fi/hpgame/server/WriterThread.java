@@ -1,7 +1,10 @@
 package fi.hpgame.server;
 
 import java.io.PrintWriter;
-import java.net.Socket;
+
+import fi.hpgame.gameLogic.GameController;
+import fi.hpgame.gameLogic.GameException;
+import fi.hpgame.gameLogic.Player;
 
 public class WriterThread implements Runnable{
 
@@ -9,9 +12,9 @@ public class WriterThread implements Runnable{
 	
 	private Player player;
 	
-	private Game game;
+	private GameController game;
 	
-	public WriterThread(PrintWriter output, Player player, Game game) {
+	public WriterThread(PrintWriter output, Player player, GameController game) {
 		this.output = output;
 		this.player = player;
 		this.game = game;
