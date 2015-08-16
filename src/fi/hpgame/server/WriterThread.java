@@ -20,10 +20,15 @@ public class WriterThread implements Runnable{
 	@Override
 	public void run() {
 	    while (game.playerIsInGame(player)) {
-	    	output.println(game.getMessage());
-	    	System.out.println("Writing message to user ");
+	    	try {
+				output.println(game.getMessage(player));
+			} catch (GameException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+	    	System.out.println("Writing message to user " + player.getName());
 	    }
-		
+		System.out.println("User " + player.getName() + " exited.");
 	}
 
 }

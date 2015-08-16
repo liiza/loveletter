@@ -12,11 +12,12 @@ public class Game {
 	
 	private List<Player> players = Collections.synchronizedList((new ArrayList<Player>()));
 	
-	private List<String> messages = Collections.synchronizedList((new ArrayList<String>()));
+	private MessageService msgService = new MessageService();
 	
 	public static synchronized Game initGame(){
 		Game game = new Game();
 		game.putCard(new Card("King"));
+		
 		return game;
 	}
 	
@@ -32,7 +33,6 @@ public class Game {
 	}
 	// For server logging purposes
 	public void printAllCards(){
-		
 		for (Card card: cards) {
 			System.out.println(card.getName());
 		}
@@ -43,13 +43,23 @@ public class Game {
 		
 	}
 	
-	public void removePlayer(String name) {
-		
+	public void removePlayer(Player player) throws GameException {
+		if (!this.players.remove(player)) {
+			throw new GameException("Trying to remove player that is not in the game");
+			
+		}
 	}
 	
-	public synchronized void broadCastToPlayers(String msg) {
-		messages.add(msg);
-		notifyAll();
+	public void broadCastToPlayers(String msg) {
+		msgService.addMessage("BroadCasted message " + msg, players);
+	}
+	private String printPlayers(){
+		String s = "";
+		for (Player player : players) {
+			s += player.getName();
+			s += " ";
+		}
+		return s;
 	}
 
 	
@@ -58,20 +68,8 @@ public class Game {
 
 	}
 
-	public synchronized char[] getMessage() {
-		// do some shit here about threads sleeping and waiting for their turn
-		while (messages.isEmpty()) {
-			try {
-				wait();
-			} catch (InterruptedException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
-		System.out.println("There are messages");
-		char[] msg = messages.get(messages.size() - 1).toCharArray();
-		System.out.println(msg);
-		
-		return msg;
+	public char[] getMessage(Player player) throws GameException {
+
+		return msgService.getMessage(player).toCharArray();
 	}
 }

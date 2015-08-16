@@ -35,9 +35,9 @@ public class Client {
 			while (gameIsOn) {
 				System.out.println("Enter text:");
 				userInput = System.console().readLine();
-				System.out.println("Got text from user " + userInput);
 				output.println(userInput);
 				if (userInput != null && userInput.equals("end")) {
+					System.out.println("Closing the game");
 					gameIsOn = false;
 					thread.closeGame();
 				}
@@ -65,15 +65,15 @@ public class Client {
 		}
 		
 		public @Override void run() {
-		try {
-			while (gameIsOn) {
-				String serverInput = input.readLine();
-				System.out.println(serverInput);
+			try {
+				while (gameIsOn) {
+					String serverInput = input.readLine();
+					System.out.println(serverInput);
+				}
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 		
 		}
 	}

@@ -24,7 +24,7 @@ public class WorkerThread implements Runnable {
 				        new BufferedReader(
 				            new InputStreamReader(this.socket.getInputStream()));
 	
-			output.println("ok");
+			output.println("Server response : ok");
 	
 			boolean gameIsOn = true;
 			Player player = null;
@@ -36,7 +36,11 @@ public class WorkerThread implements Runnable {
 					continue;
 				}
 				if (userInput.equals("end")) {
-					output.println(("end"));
+					System.out.println("User quit.");
+					if (player != null) {
+						game.broadCastToPlayers("Player " + player.getName() + " has left the game.");
+						game.removePlayer(player);
+					}
 					gameIsOn = false;
 				} else {
 					if (player == null) {
