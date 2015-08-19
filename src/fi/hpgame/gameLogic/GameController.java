@@ -26,10 +26,11 @@ public class GameController {
 	
 	public static synchronized GameController initGame(){
 		GameController game = new GameController();
-		game.putCard(new Card("King"));
-		game.putCard(new Card("Maid"));
-		game.putCard(new Card("Guard"));
-		game.putCard(new Card("Princess"));
+		game.putCard(new King("King"));
+		game.putCard(new Priest("Priest"));
+		game.putCard(new King("King"));
+		game.putCard(new Priest("Priest"));
+
 		game.setState(GameState.PREPARATION);
 		return game;
 	}
@@ -49,12 +50,13 @@ public class GameController {
 				}
 			}
 		}
+		playerService.cardsDealed();
 	}
 	public void askPlayerToPlayCard() throws GameException {
 		sendMessageToPlayer("Play a card",  playerService.getPlayerInTurn());
 	}
 	
-	public void playCard(Card card, Player player1, Player player2) {
+	public synchronized void playCard(Card card, Player player1, Player player2) {
 		player1.playCard(card, player2);
 		notify();
 	}
@@ -74,13 +76,16 @@ public class GameController {
 	public void removePlayer(Player player) throws GameException {
 		playerService.removePlayer(player);
 	}
+	public Player getPlayer(int i) throws GameException {
+		return playerService.getPlayer(i);
+	}
 	
 	public boolean playerIsInGame(Player player) {
 		return playerService.playerIsInGame(player);
 
 	}
 	public void sendMessageToPlayer(String msg, Player player) {
-		msgService.addMessage("BroadCasted message " + msg, player);
+		msgService.addMessage("Private message to player " + player.getName() + " : " + msg, player);
 	}
 	
 	public void broadCastToPlayers(String msg) {
@@ -100,4 +105,6 @@ public class GameController {
 	public void setState(GameState state) {
 		this.state = state;
 	}
+
+
 }

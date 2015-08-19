@@ -1,6 +1,6 @@
 package fi.hpgame.gameLogic;
 
-public class Card {
+public abstract class Card {
 	private String name;
 
 	public Card(String s) {
@@ -14,5 +14,7 @@ public class Card {
 	public void setName(String name) {
 		this.name = name;
 	}
+	
+	public abstract void play(Player player1, Player player2);
 	
 }

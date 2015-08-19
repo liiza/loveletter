@@ -3,6 +3,7 @@ package fi.hpgame.gameLogic;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Random;
 
 public class CardService {
 
@@ -17,7 +18,9 @@ public class CardService {
 		if (cards.isEmpty()) {
 			throw new GameException("Trying to take card from empty stack."); 
 		}
-		return cards.remove(cards.size() - 1);
+		Random rand = new Random();
+		int randomNum = rand.nextInt(cards.size());
+		return cards.remove(randomNum);
 	}
 	
 	public boolean isEmpty(){

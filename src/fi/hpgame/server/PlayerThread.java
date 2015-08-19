@@ -9,6 +9,7 @@ import fi.hpgame.gameLogic.Card;
 import fi.hpgame.gameLogic.GameController;
 import fi.hpgame.gameLogic.GameException;
 import fi.hpgame.gameLogic.GameState;
+import fi.hpgame.gameLogic.King;
 import fi.hpgame.gameLogic.Player;
 
 public class PlayerThread implements Runnable {
@@ -39,17 +40,17 @@ public class PlayerThread implements Runnable {
 	
 				if (userInput.equals("end")) {
 					quitGame(player);
-				
 				} else if (userInput.equals("start")){
 					startGame();
 				} else {
 					if (player == null) {
 						player = joinGame(output, userInput);
 					} else {
-						game.putCard(new Card(userInput));
-						output.println(("Thanks, added new card " + userInput));
-						game.broadCastToPlayers(("Added new card " + userInput));
-					
+						Player player2 = game.getPlayer(1);
+						Card card = player.getCards().get(0);
+						game.playCard(card, player, player2);
+						output.println(("You played card " + card.getName() + " towards player " + player2.getName()));
+						game.broadCastToPlayers((player.getName() + " played card " + userInput));
 											
 					}
 				}

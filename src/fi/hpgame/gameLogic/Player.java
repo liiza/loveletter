@@ -27,9 +27,17 @@ public class Player {
 		cards.add(card);
 		
 	}
+	public List<Card> getCards() {
+		return this.cards;
+	}
 
 	public void playCard(Card card, Player player2) {
-		// TODO Auto-generated method stub
+		card.play(this, player2);
+		
+	}
+
+	public void setCards(List<Card> cards) {
+		this.cards = cards;
 		
 	}
 	

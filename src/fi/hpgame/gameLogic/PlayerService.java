@@ -36,6 +36,13 @@ public class PlayerService {
 		return this.players;
 	}
 
+	public Player getPlayer(int i) throws GameException {
+		if (i >= 0 && i < players.size()) {
+			return players.get(i);
+		}
+		throw new GameException("Player list outof bounds exception");
+	}
+	
 	public boolean playerIsInGame(Player player) {
 		return players.contains(player);
 	
@@ -43,7 +50,7 @@ public class PlayerService {
 
 	public Player getPlayerInTurn() throws GameException {
 		if (players.size() <= playerInTurn) {
-			throw new GameException("All players have already playid");
+			throw new GameException("All players have already played in this round");
 		}
 		return players.get(playerInTurn++);
 	}
@@ -59,4 +66,5 @@ public class PlayerService {
 		player.giveCard(card);
 		
 	}
+
 }
