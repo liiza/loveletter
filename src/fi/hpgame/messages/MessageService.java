@@ -24,9 +24,7 @@ public class MessageService {
 	public synchronized void addMessage(String msg, List<Player> players) {
 		Message message = new Message(msg);
 		message.setBroadCastTo(players.size());
-		// Copy the list contents since user might need to get a message after leaving the game
-		ArrayList<Player> copyPlayers = new ArrayList<Player>();
-		copyPlayers.addAll(players);
+		ArrayList<Player> copyPlayers = new ArrayList<Player>(players);
 		message.setPlayers(copyPlayers);
 		messages.add(message);
 		notifyAll();
@@ -60,7 +58,7 @@ public class MessageService {
 			
 			// The message might be broadcasted before player joined the game or might not be visible for him for some reason.
 			if (message.shouldSeeTheMessage(player)) {
-				
+				message.removePlayer(player);
 				return message;
 			}	
 	

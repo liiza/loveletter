@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
+import java.util.List;
 
 import fi.hpgame.gameLogic.Card;
 import fi.hpgame.gameLogic.GameController;
@@ -35,6 +36,7 @@ public class PlayerThread implements Runnable {
 			output.println("Server response : ok");
 	
 			Player player = null;
+			Card card = null;
 			while (gameIsOn) {
 				String userInput = input.readLine();
 	
@@ -45,13 +47,46 @@ public class PlayerThread implements Runnable {
 				} else {
 					if (player == null) {
 						player = joinGame(output, userInput);
-					} else {
-						Player player2 = game.getPlayer(1);
-						Card card = player.getCards().get(0);
+					} else if (card == null){
+						
+						int cardIndex; 
+						List<Card> cards = player.getCards();
+						try {
+							cardIndex = Integer.parseInt(userInput);
+							if (cardIndex < 0 || cardIndex >= cards.size()) {
+								output.println("Give a card index that is in range of 0 to " + (cards.size() - 1));
+								continue;
+							}
+						} catch (NumberFormatException e) {
+							output.println("Give a valid integer.");
+							continue;
+						}
+						card = cards.get(cardIndex);
+						game.askPlayerToSelectPlayer(player);
+						
+											
+					} else  {
+						int playerIndex;
+						try {
+							playerIndex = Integer.parseInt(userInput);
+							game.getPlayer(playerIndex);
+						} catch (NumberFormatException e) {
+							output.println("Give a valid integer.");
+							continue;
+						} catch(GameException e) {
+							output.println("Give a number that is range.");
+							continue;
+						}
+						Player player2 = game.getPlayer(playerIndex);
+						// TODO don't play card against your self
 						game.playCard(card, player, player2);
 						output.println(("You played card " + card.getName() + " towards player " + player2.getName()));
 						game.broadCastToPlayers((player.getName() + " played card " + userInput));
-											
+						output.println("You have following cards: " + player.getCards().toString());
+						
+						player = null;
+						card = null;
+						
 					}
 				}
 			}

@@ -44,6 +44,12 @@ public class Message {
 	public boolean shouldSeeTheMessage(Player player) {
 		return this.players.contains(player);
 	}
+
+	public void removePlayer(Player player) {
+		this.players.remove(player);
+		
+	}
+	
 	public String printPlayers() {
 		String s = "";
 		for (Player player : players) {

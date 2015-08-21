@@ -52,9 +52,26 @@ public class GameController {
 		}
 		playerService.cardsDealed();
 	}
+	
 	public void askPlayerToPlayCard() throws GameException {
-		sendMessageToPlayer("Play a card",  playerService.getPlayerInTurn());
+		String msg = "Select a card to play ";
+		Player player = playerService.getPlayerInTurn();
+		List<Card> cards = player.getCards();
+		for (int i = 0; i < cards.size(); i++) {
+			msg += " [" + i + "] " + cards.get(i).getName();
+		}
+		sendMessageToPlayer(msg, player);
 	}
+	
+	public void askPlayerToSelectPlayer(Player player) {
+		String msg = "Choose player to play this card against to ";
+		List<Player> players = playerService.getPlayers();
+		for (int i = 0; i < players.size(); i++) {
+			msg += " [" + i + "] " + players.get(i).getName(); 					
+		}
+		sendMessageToPlayer(msg, player);
+	}
+	
 	
 	public synchronized void playCard(Card card, Player player1, Player player2) {
 		player1.playCard(card, player2);
@@ -84,11 +101,12 @@ public class GameController {
 		return playerService.playerIsInGame(player);
 
 	}
-	public void sendMessageToPlayer(String msg, Player player) {
+	public synchronized void sendMessageToPlayer(String msg, Player player) {
 		msgService.addMessage("Private message to player " + player.getName() + " : " + msg, player);
 	}
 	
-	public void broadCastToPlayers(String msg) {
+	public synchronized void broadCastToPlayers(String msg) {
+		System.out.println ("Broadcasting to players");
 		msgService.addMessage("BroadCasted message " + msg, playerService.getPlayers());
 	}
 
@@ -104,6 +122,11 @@ public class GameController {
 
 	public void setState(GameState state) {
 		this.state = state;
+	}
+
+	public String getGameSituation() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 
