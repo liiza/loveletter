@@ -9,8 +9,6 @@ import java.util.List;
 import fi.hpgame.gameLogic.Card;
 import fi.hpgame.gameLogic.GameController;
 import fi.hpgame.gameLogic.GameException;
-import fi.hpgame.gameLogic.GameState;
-import fi.hpgame.gameLogic.King;
 import fi.hpgame.gameLogic.Player;
 
 public class PlayerThread implements Runnable {
@@ -49,43 +47,36 @@ public class PlayerThread implements Runnable {
 						player = joinGame(output, userInput);
 					} else if (card == null){
 						
-						int cardIndex; 
-						List<Card> cards = player.getCards();
 						try {
-							cardIndex = Integer.parseInt(userInput);
+
+							List<Card> cards = player.getCards();
+							int cardIndex = Integer.parseInt(userInput);
 							if (cardIndex < 0 || cardIndex >= cards.size()) {
 								output.println("Give a card index that is in range of 0 to " + (cards.size() - 1));
 								continue;
 							}
+							card = cards.get(cardIndex);
+							game.askPlayerToSelectPlayer(player);
 						} catch (NumberFormatException e) {
 							output.println("Give a valid integer.");
-							continue;
 						}
-						card = cards.get(cardIndex);
-						game.askPlayerToSelectPlayer(player);
-						
 											
 					} else  {
-						int playerIndex;
-						try {
-							playerIndex = Integer.parseInt(userInput);
-							game.getPlayer(playerIndex);
+			
+						try {			
+							Player player2 = game.getPlayer(Integer.parseInt(userInput));
+							// TODO don't play card against your self
+							game.playCard(card, player, player2);
+							output.println(("You played card " + card.getName() + " towards player " + player2.getName()));
+							game.broadCastToPlayers((player.getName() + " played card " + card.getName() + " against " + player2.getName()));
+							output.println("You have following cards: " + player.getCards().toString());
+							card = null;
+							
 						} catch (NumberFormatException e) {
 							output.println("Give a valid integer.");
-							continue;
 						} catch(GameException e) {
 							output.println("Give a number that is range.");
-							continue;
 						}
-						Player player2 = game.getPlayer(playerIndex);
-						// TODO don't play card against your self
-						game.playCard(card, player, player2);
-						output.println(("You played card " + card.getName() + " towards player " + player2.getName()));
-						game.broadCastToPlayers((player.getName() + " played card " + userInput));
-						output.println("You have following cards: " + player.getCards().toString());
-						
-						card = null;
-						
 					}
 				}
 			}
