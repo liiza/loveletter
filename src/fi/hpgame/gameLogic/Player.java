@@ -31,6 +31,14 @@ public class Player {
 		return this.cards;
 	}
 
+	public String getHand(){
+		String hand = "";
+		for (Card card : this.cards) {
+			hand += card.getName() + " ";
+		}
+		return hand;
+	}
+	
 	public void playCard(Card card, Player player2) {
 		card.play(this, player2);
 		

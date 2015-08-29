@@ -4,8 +4,10 @@ import java.util.List;
 
 public class King extends Card {
 
-	public King(String s) {
-		super(s);
+	private static String KING = "King";
+
+	public King(GameController game) {
+		super(KING, game);
 	}
 
 	@Override
