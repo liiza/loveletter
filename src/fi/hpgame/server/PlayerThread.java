@@ -84,7 +84,6 @@ public class PlayerThread implements Runnable {
 						game.broadCastToPlayers((player.getName() + " played card " + userInput));
 						output.println("You have following cards: " + player.getCards().toString());
 						
-						player = null;
 						card = null;
 						
 					}
@@ -112,7 +111,7 @@ public class PlayerThread implements Runnable {
 
 	}
 
-	private Player joinGame(PrintWriter output, String userInput) {
+	private synchronized Player joinGame(PrintWriter output, String userInput) {
 		Player player = new Player(userInput);
 		game.addPlayer(player, output);
 		output.println(("Added new player " + userInput));
