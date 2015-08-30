@@ -10,12 +10,17 @@ public class Guard extends Card {
 
 	@Override
 	public void play(Player player1, Player player2) {
-		// TODO Auto-generated method stub
+		
 
 	}
 
 	@Override
 	public boolean requiresTargetPlayer() {
+		return true;
+	}
+	
+	@Override 
+	public boolean requiresExtraParemeters(){
 		return true;
 	}
 
