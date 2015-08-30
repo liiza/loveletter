@@ -63,8 +63,16 @@ public class GameController {
 		sendMessageToPlayer(msg, player);
 	}
 	
-	public void askPlayerToSelectPlayer(Player player) {
-		String msg = "Choose player to play this card against to ";
+	public void askPlayerToSelectPlayer(Player player, Card card) {
+		if (!playerService.isPlayerInTurn(player)) {
+			try {
+				throw new GameException("Player is not in turn");
+			} catch (GameException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		String msg = "Choose player to play card " + card.getName() +" against to ";
 		List<Player> players = playerService.getPlayers();
 		for (int i = 0; i < players.size(); i++) {
 			msg += " [" + i + "] " + players.get(i).getName(); 					
@@ -74,7 +82,11 @@ public class GameController {
 	
 	
 	public synchronized void playCard(Card card, Player player1, Player player2) {
-		player1.playCard(card, player2);
+		try {
+			playerService.playCard(card, player1,player2);
+		} catch (GameException e) {
+			e.printStackTrace();
+		}
 		notify();
 	}
 	public boolean allPlayersReady() {
@@ -124,9 +136,10 @@ public class GameController {
 		this.state = state;
 	}
 
-	public String getGameSituation() {
-		// TODO Auto-generated method stub
-		return null;
+
+
+	public synchronized boolean isPlayerInTurn(Player player) {
+		return playerService.isPlayerInTurn(player);
 	}
 
 

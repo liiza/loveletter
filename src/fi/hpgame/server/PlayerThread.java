@@ -15,68 +15,82 @@ public class PlayerThread implements Runnable {
 	private Socket socket;
 	private GameController game;
 	private boolean gameIsOn = true;
-	
-	public PlayerThread(Socket clientSocket, GameController game){
+
+	public PlayerThread(Socket clientSocket, GameController game) {
 		this.socket = clientSocket;
 		this.game = game;
 	}
-	
+
 	@Override
 	public void run() {
 		try {
-			
-		    PrintWriter output =
-		            new PrintWriter(this.socket.getOutputStream(), true);
-			BufferedReader input =
-				        new BufferedReader(
-				            new InputStreamReader(this.socket.getInputStream()));
-	
+
+			PrintWriter output = new PrintWriter(this.socket.getOutputStream(),
+					true);
+			BufferedReader input = new BufferedReader(new InputStreamReader(
+					this.socket.getInputStream()));
+
 			output.println("Server response : ok");
-	
+
 			Player player = null;
 			Card card = null;
 			while (gameIsOn) {
+
 				String userInput = input.readLine();
-	
+				
 				if (userInput.equals("end")) {
 					quitGame(player);
-				} else if (userInput.equals("start")){
+				} else if (userInput.equals("start")) {
 					startGame();
 				} else {
 					if (player == null) {
 						player = joinGame(output, userInput);
-					} else if (card == null){
-						
-						try {
-
-							List<Card> cards = player.getCards();
-							int cardIndex = Integer.parseInt(userInput);
-							if (cardIndex < 0 || cardIndex >= cards.size()) {
-								output.println("Give a card index that is in range of 0 to " + (cards.size() - 1));
-								continue;
+					} else if (game.isPlayerInTurn(player)) {
+						if (card == null) {
+							try {
+								List<Card> cards = player.getCards();
+								int cardIndex = Integer.parseInt(userInput);
+								if (cardIndex < 0 || cardIndex >= cards.size()) {
+									output.println("Give a card index that is in range of 0 to "
+											+ (cards.size() - 1));
+								
+								} else {
+									card = cards.get(cardIndex);
+									game.askPlayerToSelectPlayer(player, card);
+								}
+								
+							} catch (NumberFormatException e) {
+								output.println("Give a valid integer.");
 							}
-							card = cards.get(cardIndex);
-							game.askPlayerToSelectPlayer(player);
-						} catch (NumberFormatException e) {
-							output.println("Give a valid integer.");
-						}
-											
-					} else  {
-			
-						try {			
-							Player player2 = game.getPlayer(Integer.parseInt(userInput));
-							// TODO don't play card against your self
-							game.playCard(card, player, player2);
-							output.println(("You played card " + card.getName() + " towards player " + player2.getName()));
-							game.broadCastToPlayers((player.getName() + " played card " + card.getName() + " against " + player2.getName()));
-							output.println("You have following cards: " + player.getCards().toString());
-							card = null;
+
+						} else {
+
+							try {
+								Player player2 = game.getPlayer(Integer
+										.parseInt(userInput));
+								// TODO don't play card against your self
 							
-						} catch (NumberFormatException e) {
-							output.println("Give a valid integer.");
-						} catch(GameException e) {
-							output.println("Give a number that is range.");
+								output.println(("You played card "
+										+ card.getName() + " towards player " + player2
+										.getName()));
+								game.broadCastToPlayers((player.getName()
+										+ " played card " + card.getName()
+										+ " against " + player2.getName()));
+							
+								
+								game.playCard(card, player, player2);
+								output.println("You have following cards: "
+										+ player.getHand());
+								card = null;
+
+							} catch (NumberFormatException e) {
+								output.println("Give a valid integer.");
+							} catch (GameException e) {
+								output.println("Give a number that is range.");
+							}
 						}
+					} else {
+						output.println("Not your turn!");
 					}
 				}
 			}
@@ -88,14 +102,15 @@ public class PlayerThread implements Runnable {
 	// Start game with the players who have joined to the game
 	private void startGame() {
 		game.startGame();
-		
+
 	}
 
 	private void quitGame(Player player) throws GameException {
-	
+
 		System.out.println("User quit.");
 		if (player != null) {
-			game.broadCastToPlayers("Player " + player.getName() + " has left the game.");
+			game.broadCastToPlayers("Player " + player.getName()
+					+ " has left the game.");
 			game.removePlayer(player);
 		}
 		this.gameIsOn = false;

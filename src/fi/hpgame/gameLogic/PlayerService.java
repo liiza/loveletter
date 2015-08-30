@@ -49,21 +49,37 @@ public class PlayerService {
 	}
 
 	public Player getPlayerInTurn() throws GameException {
-		if (players.size() <= playerInTurn) {
+		if (allPlayersReady()) {
 			throw new GameException("All players have already played in this round");
 		}
-		return players.get(playerInTurn++);
+		return players.get(playerInTurn);
 	}
 
+	public boolean isPlayerInTurn(Player player) {
+		System.out.println("Index of player " + player.getName() + " is " +  players.indexOf(player) + ". playerInTurn is " + playerInTurn);
+		return players.indexOf(player) == playerInTurn;
+	}
+	
 	public boolean allPlayersReady() {
+		System.out.println(playerInTurn + " == " + players.size());
 		return playerInTurn == players.size();
 	}
-	public void cardsDealed(){
+	public void cardsDealed() throws GameException{
+		System.out.println("Dealing cards");
 		playerInTurn = 0;
 	}
 
 	public void giveCard(Card card, Player player) {
 		player.giveCard(card);
+		
+	}
+
+	public void playCard(Card card, Player player1, Player player2) throws GameException {
+		if (!isPlayerInTurn(player1)) {
+			throw new GameException("Player "+ player1.getName()+" is not in turn, but is trying to play");
+		}
+		player1.playCard(card, player2);
+		playerInTurn++;
 		
 	}
 

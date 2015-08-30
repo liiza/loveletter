@@ -55,8 +55,7 @@ public class MessageService {
 	private Message pickTheFirstMessageVisibleToPlayer(Player player) {
 		// FIFO
 		for (Message message : messages) {
-			
-			// The message might be broadcasted before player joined the game or might not be visible for him for some reason.
+		
 			if (message.shouldSeeTheMessage(player)) {
 				message.removePlayer(player);
 				return message;

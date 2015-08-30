@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 
+import fi.hpgame.gameLogic.GameState;
 import fi.hpgame.gameLogic.GameController;
 
 public class ListenerThread implements Runnable {
@@ -19,10 +20,9 @@ public class ListenerThread implements Runnable {
 	@Override
 	public void run() {
 		try {
-			while (true) {
-				Socket clientSocket = null;
-			
-					clientSocket = serverSocket.accept();
+			while (game.getState() == GameState.PREPARATION) {
+	
+				Socket clientSocket = serverSocket.accept();
 			
 				System.out.println("Client connected.");
 				
