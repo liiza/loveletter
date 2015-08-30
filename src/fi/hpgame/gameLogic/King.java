@@ -19,7 +19,7 @@ public class King extends Card {
 
 	@Override
 	public boolean requiresTargetPlayer() {
-		return false;
+		return true;
 	}
 
 }

@@ -15,7 +15,7 @@ public class Maid extends Card {
 
 	@Override
 	public boolean requiresTargetPlayer() {
-		return true;
+		return false;
 	}
 
 }

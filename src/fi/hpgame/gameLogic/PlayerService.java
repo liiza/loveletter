@@ -65,15 +65,9 @@ public class PlayerService {
 		return playerInTurn == players.size();
 	}
 	public void cardsDealed() throws GameException{
-		removeProtectionFromAllPlayers();
 		playerInTurn = 0;
 	}
 
-	private void removeProtectionFromAllPlayers() {
-		for (Player player : players) {
-			player.setProtection(false);
-		}
-	}
 
 	public void giveCard(Card card, Player player) {
 		player.giveCard(card);
@@ -83,6 +77,9 @@ public class PlayerService {
 	public void playCard(Card card, Player player1, Player player2) throws GameException {
 		if (!isPlayerInTurn(player1)) {
 			throw new GameException("Player "+ player1.getName()+" is not in turn, but is trying to play");
+		}
+		if (player1.hasProtection()) {
+			player1.setProtection(false);
 		}
 		player1.playCard(card, player2);
 		playerInTurn++;

@@ -30,6 +30,7 @@ public class GameController {
 		game.putCard(new Priest(game));
 		game.putCard(new King(game));
 		game.putCard(new Priest(game));
+		game.putCard(new Maid(game));
 
 		game.setState(GameState.PREPARATION);
 		return game;

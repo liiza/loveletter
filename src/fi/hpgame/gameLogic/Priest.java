@@ -16,7 +16,7 @@ public class Priest extends Card{
 
 	@Override
 	public boolean requiresTargetPlayer() {
-		return false;
+		return true;
 	}
 	
 
