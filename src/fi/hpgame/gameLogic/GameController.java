@@ -53,7 +53,7 @@ public class GameController {
 		playerService.cardsDealed();
 	}
 	
-	public void askPlayerToPlayCard() throws GameException {
+	public synchronized void askPlayerToPlayCard() throws GameException {
 		String msg = "Select a card to play ";
 		Player player = playerService.getPlayerInTurn();
 		List<Card> cards = player.getCards();
@@ -63,7 +63,7 @@ public class GameController {
 		sendMessageToPlayer(msg, player);
 	}
 	
-	public void askPlayerToSelectPlayer(Player player, Card card) {
+	public synchronized void askPlayerToSelectPlayer(Player player, Card card) {
 		if (!playerService.isPlayerInTurn(player)) {
 			try {
 				throw new GameException("Player is not in turn");
@@ -75,7 +75,10 @@ public class GameController {
 		String msg = "Choose player to play card " + card.getName() +" against to ";
 		List<Player> players = playerService.getPlayers();
 		for (int i = 0; i < players.size(); i++) {
-			msg += " [" + i + "] " + players.get(i).getName(); 					
+			if (!players.get(i).hasProtection()) {
+				msg += " [" + i + "] " + players.get(i).getName(); 						
+			}
+			
 		}
 		sendMessageToPlayer(msg, player);
 	}
@@ -84,40 +87,48 @@ public class GameController {
 	public synchronized void playCard(Card card, Player player1, Player player2) {
 		try {
 			playerService.playCard(card, player1,player2);
+			broadCastToPlayers((player1.getName()
+					+ " played card " + card.getName()
+					+ " against " + player2.getName()));
 		} catch (GameException e) {
 			e.printStackTrace();
 		}
 		notify();
 	}
-	public boolean allPlayersReady() {
-		return  playerService.allPlayersReady();
+	public synchronized boolean allPlayersReady() {
+		return playerService.allPlayersReady();
 	}
-	public void putCard(Card card) {
+	private void putCard(Card card) {
 		cardService.addCard(card);
 	}
 	
-	public void addPlayer(Player player, PrintWriter output) {
+	public synchronized void addPlayer(Player player, PrintWriter output) {
 		playerService.addPlayer(player);
 		new Thread(new WriterThread(output, player, this)).start();
-		
 	}
 	
-	public void removePlayer(Player player) throws GameException {
+	public synchronized void removePlayer(Player player) throws GameException {
 		playerService.removePlayer(player);
 	}
-	public Player getPlayer(int i) throws GameException {
+	public synchronized Player getPlayer(int i) throws GameException {
 		return playerService.getPlayer(i);
 	}
 	
-	public boolean playerIsInGame(Player player) {
+	public synchronized boolean playerIsInGame(Player player) {
 		return playerService.playerIsInGame(player);
 
 	}
-	public synchronized void sendMessageToPlayer(String msg, Player player) {
+
+	public synchronized boolean isPlayerInTurn(Player player) {
+		return playerService.isPlayerInTurn(player);
+	}
+
+	
+	public void sendMessageToPlayer(String msg, Player player) {
 		msgService.addMessage("Private message to player " + player.getName() + " : " + msg, player);
 	}
 	
-	public synchronized void broadCastToPlayers(String msg) {
+	public void broadCastToPlayers(String msg) {
 		System.out.println ("Broadcasting to players");
 		msgService.addMessage("BroadCasted message " + msg, playerService.getPlayers());
 	}
@@ -137,10 +148,6 @@ public class GameController {
 	}
 
 
-
-	public synchronized boolean isPlayerInTurn(Player player) {
-		return playerService.isPlayerInTurn(player);
-	}
 
 
 }

@@ -46,48 +46,25 @@ public class PlayerThread implements Runnable {
 					if (player == null) {
 						player = joinGame(output, userInput);
 					} else if (game.isPlayerInTurn(player)) {
-						if (card == null) {
-							try {
-								List<Card> cards = player.getCards();
-								int cardIndex = Integer.parseInt(userInput);
-								if (cardIndex < 0 || cardIndex >= cards.size()) {
-									output.println("Give a card index that is in range of 0 to "
-											+ (cards.size() - 1));
-								
+						try {
+							if (card == null) {
+								card = player.getCard(Integer.parseInt(userInput));
+								if (card.requiresTargetPlayer()) {
+									game.askPlayerToSelectPlayer(player, card);					
 								} else {
-									card = cards.get(cardIndex);
-									game.askPlayerToSelectPlayer(player, card);
+									playCard(output, player, card, player);
+									card = null;
 								}
-								
-							} catch (NumberFormatException e) {
-								output.println("Give a valid integer.");
-							}
 
-						} else {
-
-							try {
-								Player player2 = game.getPlayer(Integer
-										.parseInt(userInput));
-								// TODO don't play card against your self
-							
-								output.println(("You played card "
-										+ card.getName() + " towards player " + player2
-										.getName()));
-								game.broadCastToPlayers((player.getName()
-										+ " played card " + card.getName()
-										+ " against " + player2.getName()));
-							
-								
-								game.playCard(card, player, player2);
-								output.println("You have following cards: "
-										+ player.getHand());
+							} else {
+								playCard(output, player, card, game.getPlayer(Integer
+										.parseInt(userInput)));
 								card = null;
-
-							} catch (NumberFormatException e) {
-								output.println("Give a valid integer.");
-							} catch (GameException e) {
-								output.println("Give a number that is range.");
 							}
+						} catch (NumberFormatException e) {
+							output.println("Give a valid integer.");
+						} catch (GameException e) {
+							output.println("Give a number that is range.");
 						}
 					} else {
 						output.println("Not your turn!");
@@ -97,6 +74,17 @@ public class PlayerThread implements Runnable {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	private void playCard(PrintWriter output, Player player, Card card,
+			Player player2) {
+		output.println(("You played card "
+				+ card.getName() + " towards player " + player2
+				.getName()));
+		game.playCard(card, player, player2);
+		output.println("You have following cards: "
+				+ player.getHand());	
+
 	}
 
 	// Start game with the players who have joined to the game
@@ -117,7 +105,7 @@ public class PlayerThread implements Runnable {
 
 	}
 
-	private synchronized Player joinGame(PrintWriter output, String userInput) {
+	private Player joinGame(PrintWriter output, String userInput) {
 		Player player = new Player(userInput);
 		game.addPlayer(player, output);
 		output.println(("Added new player " + userInput));

@@ -17,4 +17,9 @@ public class King extends Card {
 		player2.setCards(temp);
 	}
 
+	@Override
+	public boolean requiresTargetPlayer() {
+		return false;
+	}
+
 }

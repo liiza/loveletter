@@ -10,6 +10,8 @@ public class Player {
 	private String name;
 	
 	private List<Card> cards =  new ArrayList<Card>();
+
+	private boolean protection = false;
 	
 	public Player(String name) {
 		this.name = name;
@@ -41,12 +43,28 @@ public class Player {
 	
 	public void playCard(Card card, Player player2) {
 		card.play(this, player2);
-		
 	}
 
 	public void setCards(List<Card> cards) {
 		this.cards = cards;
+	}
+
+	public void setProtection(boolean protection) {
+		this.protection = protection;
+	}
+	
+	public boolean hasProtection() {
+		return protection ;
+	}
+
+	public Card getCard(int cardIndex) throws GameException {
+		if (cardIndex < 0 || cardIndex >= cards.size()) {
+			throw new GameException("Give a card index that is in range of 0 to "
+					+ (cards.size() - 1));
 		
+		} else {
+			return cards.get(cardIndex);
+		}
 	}
 	
 }

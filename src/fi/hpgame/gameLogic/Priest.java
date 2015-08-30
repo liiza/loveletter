@@ -13,6 +13,11 @@ public class Priest extends Card{
 		sendMessageToPlayer(player2.getName() + " has following cards: " + player2.getHand(), player1);
 		
 	}
+
+	@Override
+	public boolean requiresTargetPlayer() {
+		return false;
+	}
 	
 
 }

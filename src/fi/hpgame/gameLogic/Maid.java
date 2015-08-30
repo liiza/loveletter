@@ -10,8 +10,12 @@ public class Maid extends Card {
 
 	@Override
 	public void play(Player player1, Player player2) {
-		// TODO Auto-generated method stub
+		player1.setProtection(true);
+	}
 
+	@Override
+	public boolean requiresTargetPlayer() {
+		return true;
 	}
 
 }

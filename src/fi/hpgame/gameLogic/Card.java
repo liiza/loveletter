@@ -23,4 +23,5 @@ public abstract class Card {
 	
 	public abstract void play(Player player1, Player player2);
 	
+	public abstract boolean requiresTargetPlayer();
 }

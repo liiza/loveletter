@@ -65,8 +65,14 @@ public class PlayerService {
 		return playerInTurn == players.size();
 	}
 	public void cardsDealed() throws GameException{
-		System.out.println("Dealing cards");
+		removeProtectionFromAllPlayers();
 		playerInTurn = 0;
+	}
+
+	private void removeProtectionFromAllPlayers() {
+		for (Player player : players) {
+			player.setProtection(false);
+		}
 	}
 
 	public void giveCard(Card card, Player player) {
