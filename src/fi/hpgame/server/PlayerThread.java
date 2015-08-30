@@ -108,7 +108,7 @@ public class PlayerThread implements Runnable {
 	private Player joinGame(PrintWriter output, String userInput) {
 		Player player = new Player(userInput);
 		game.addPlayer(player, output);
-		output.println(("Added new player " + userInput));
+		game.broadCastToPlayers("Added new player " + player.getName());
 		return player;
 	}
 
