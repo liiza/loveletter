@@ -9,7 +9,7 @@ public class Maid extends Card {
 	}
 
 	@Override
-	public void play(Player player1, Player player2) {
+	public void play(Player player1, Player player2, String additionalParameters) {
 		player1.setProtection(true);
 	}
 

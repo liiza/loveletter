@@ -9,8 +9,10 @@ public class Guard extends Card {
 	}
 
 	@Override
-	public void play(Player player1, Player player2) {
-		
+	public void play(Player player1, Player player2, String additionalParameters) throws GameException {
+		if (player2.getHand().contains(additionalParameters)) {
+			game.removePlayer(player2);
+		}
 
 	}
 

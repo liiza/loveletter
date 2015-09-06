@@ -27,31 +27,31 @@ public class Server {
 			try {
 				while (true) {
 					switch (game.getState()) {
-					case PREPARATION:
-						game.wait();
-						break;
-					case ON:
-						// Give two cards to each player at the beginning
-						game.dealCards(2);
-						game.setState(GameState.PLAYING);
-						break;
-					case PLAYING:
-						if (game.allPlayersReady()) {
-							System.out.println("Dealing new cards");
-							game.setState(GameState.DEALNEWCARDS);
+						case PREPARATION:
+							game.wait();
 							break;
+						case ON:
+							// Give two cards to each player at the beginning
+							game.dealCards(2);
+							game.setState(GameState.PLAYING);
+							break;
+						case PLAYING:
+							if (game.allPlayersReady()) {
+								System.out.println("Dealing new cards");
+								game.setState(GameState.DEALNEWCARDS);
+								break;
+							}
+							game.askPlayerToPlayCard();
+							game.wait();
+							break;
+						case DEALNEWCARDS:
+							game.dealCards(1);
+							game.setState(GameState.PLAYING);
+							break;
+							
+						default:
+							game.wait();
 						}
-						game.askPlayerToPlayCard();
-						game.wait();
-						break;
-					case DEALNEWCARDS:
-						game.dealCards(1);
-						game.setState(GameState.PLAYING);
-						break;
-						
-					default:
-						game.wait();
-					}
 				}
 				
 			} catch (Exception e) {

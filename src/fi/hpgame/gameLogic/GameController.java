@@ -31,6 +31,7 @@ public class GameController {
 		game.putCard(new King(game));
 		game.putCard(new Priest(game));
 		game.putCard(new Maid(game));
+		game.putCard(new Guard(game));
 
 		game.setState(GameState.PREPARATION);
 		return game;
@@ -85,9 +86,9 @@ public class GameController {
 	}
 	
 	
-	public synchronized void playCard(Card card, Player player1, Player player2) {
+	public synchronized void playCard(Card card, Player player1, Player player2, String additionalParameters) {
 		try {
-			playerService.playCard(card, player1,player2);
+			playerService.playCard(card, player1, player2, additionalParameters);
 			broadCastToPlayers((player1.getName()
 					+ " played card " + card.getName()
 					+ " against " + player2.getName()));
@@ -110,6 +111,7 @@ public class GameController {
 	
 	public synchronized void removePlayer(Player player) throws GameException {
 		playerService.removePlayer(player);
+		broadCastToPlayers("Player player " + player.getName() + " dropped out."); 
 	}
 	public synchronized Player getPlayer(int i) throws GameException {
 		return playerService.getPlayer(i);
@@ -146,6 +148,11 @@ public class GameController {
 
 	public void setState(GameState state) {
 		this.state = state;
+	}
+
+	public void askPlayerToGiveExtraParameter() {
+		// TODO Auto-generated method stub
+		
 	}
 
 

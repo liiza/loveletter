@@ -1,7 +1,7 @@
 package fi.hpgame.gameLogic;
 
 public abstract class Card {
-	private GameController game;
+	protected GameController game;
 	private String name;
 
 	public Card(String s, GameController game) {
@@ -21,9 +21,11 @@ public abstract class Card {
 		game.sendMessageToPlayer(msg, player);
 	}
 	
-	public abstract void play(Player player1, Player player2);
+	public abstract void play(Player player1, Player player2, String additionalParameters) throws GameException;
 	
-	public abstract boolean requiresTargetPlayer();
+	public boolean requiresTargetPlayer() {
+		return false;
+	}
 	
 	public boolean requiresExtraParemeters() {
 		return false;

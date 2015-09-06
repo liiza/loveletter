@@ -9,7 +9,7 @@ public class Priest extends Card{
 	}
 
 	@Override
-	public void play(Player player1, Player player2) {
+	public void play(Player player1, Player player2,  String additionalParameters) {
 		sendMessageToPlayer(player2.getName() + " has following cards: " + player2.getHand(), player1);
 		
 	}

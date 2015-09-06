@@ -33,12 +33,15 @@ public class PlayerThread implements Runnable {
 			output.println("Server response : ok");
 
 			Player player = null;
-			Card card = null;
+			Player targetPlayer = null;
+			Card card = null;			
+			
 			while (gameIsOn) {
 
 				String userInput = input.readLine();
 				
-				if (userInput.equals("end")) {
+				//TODO determine whether user input is 0 
+				if (userInput == null || userInput.equals("end")) {
 					quitGame(player);
 				} else if (userInput.equals("start")) {
 					startGame();
@@ -51,16 +54,33 @@ public class PlayerThread implements Runnable {
 								card = player.getCard(Integer.parseInt(userInput));
 								if (card.requiresTargetPlayer()) {
 									game.askPlayerToSelectPlayer(player, card);					
+								} else if (card.requiresExtraParemeters()){
+									game.askPlayerToGiveExtraParameter();
 								} else {
 									playCard(output, player, card, player);
 									card = null;
+									targetPlayer = null;
 								}
 
+							} else if (card.requiresTargetPlayer() && targetPlayer == null) {
+								targetPlayer = game.getPlayer(Integer
+										.parseInt(userInput));
+								if (card.requiresExtraParemeters()) {
+									game.askPlayerToGiveExtraParameter();
+								} else {
+									playCard(output, player, card, targetPlayer);
+									card = null;
+									targetPlayer = null;
+								}
+								
 							} else {
-								playCard(output, player, card, game.getPlayer(Integer
-										.parseInt(userInput)));
+								String additionalParameters = userInput;
+								playCard(output, player, card, targetPlayer, additionalParameters);
 								card = null;
+								targetPlayer = null;
+								
 							}
+							//TODO figure out how to get extra parameters from player.
 						} catch (NumberFormatException e) {
 							output.println("Give a valid integer.");
 						} catch (GameException e) {
@@ -78,10 +98,16 @@ public class PlayerThread implements Runnable {
 
 	private void playCard(PrintWriter output, Player player, Card card,
 			Player player2) {
+		playCard(output, player, card,
+				player2, null);
+	}
+	
+	private void playCard(PrintWriter output, Player player, Card card,
+			Player player2, String additionalParameters) {
 		output.println(("You played card "
 				+ card.getName() + " towards player " + player2
 				.getName()));
-		game.playCard(card, player, player2);
+		game.playCard(card, player, player2, additionalParameters);
 		output.println("You have following cards: "
 				+ player.getHand());	
 

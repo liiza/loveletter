@@ -11,7 +11,7 @@ public class King extends Card {
 	}
 
 	@Override
-	public void play(Player player1, Player player2) {
+	public void play(Player player1, Player player2, String additionalParameters) {
 		List<Card> temp = player1.getCards();
 		player1.setCards(player2.getCards());
 		player2.setCards(temp);

@@ -41,8 +41,8 @@ public class Player {
 		return hand;
 	}
 	
-	public void playCard(Card card, Player player2) {
-		card.play(this, player2);
+	public void playCard(Card card, Player player2, String additionalParameters) throws GameException {
+		card.play(this, player2, additionalParameters);
 	}
 
 	public void setCards(List<Card> cards) {

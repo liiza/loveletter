@@ -74,14 +74,14 @@ public class PlayerService {
 		
 	}
 
-	public void playCard(Card card, Player player1, Player player2) throws GameException {
+	public void playCard(Card card, Player player1, Player player2, String additionalParameters) throws GameException {
 		if (!isPlayerInTurn(player1)) {
 			throw new GameException("Player "+ player1.getName()+" is not in turn, but is trying to play");
 		}
 		if (player1.hasProtection()) {
 			player1.setProtection(false);
 		}
-		player1.playCard(card, player2);
+		player1.playCard(card, player2, additionalParameters);
 		playerInTurn++;
 		
 	}
