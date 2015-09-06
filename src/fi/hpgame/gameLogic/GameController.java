@@ -84,7 +84,19 @@ public class GameController {
 		}
 		sendMessageToPlayer(msg, player);
 	}
-	
+
+	public void askPlayerToGiveExtraParameter(Player player, Card card) {
+		if (!playerService.isPlayerInTurn(player)) {
+			try {
+				throw new GameException("Player is not in turn");
+			} catch (GameException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		sendMessageToPlayer(card.getExtraParameterDescription(), player);
+		
+	}
 	
 	public synchronized void playCard(Card card, Player player1, Player player2, String additionalParameters) {
 		try {
@@ -150,10 +162,6 @@ public class GameController {
 		this.state = state;
 	}
 
-	public void askPlayerToGiveExtraParameter() {
-		// TODO Auto-generated method stub
-		
-	}
 
 
 

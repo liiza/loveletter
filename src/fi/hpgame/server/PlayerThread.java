@@ -40,7 +40,7 @@ public class PlayerThread implements Runnable {
 
 				String userInput = input.readLine();
 				
-				//TODO determine whether user input is 0 
+				//TODO is this correct way to determine the client socket closing?
 				if (userInput == null || userInput.equals("end")) {
 					quitGame(player);
 				} else if (userInput.equals("start")) {
@@ -55,7 +55,7 @@ public class PlayerThread implements Runnable {
 								if (card.requiresTargetPlayer()) {
 									game.askPlayerToSelectPlayer(player, card);					
 								} else if (card.requiresExtraParemeters()){
-									game.askPlayerToGiveExtraParameter();
+									game.askPlayerToGiveExtraParameter(player, card);
 								} else {
 									playCard(output, player, card, player);
 									card = null;
@@ -66,7 +66,7 @@ public class PlayerThread implements Runnable {
 								targetPlayer = game.getPlayer(Integer
 										.parseInt(userInput));
 								if (card.requiresExtraParemeters()) {
-									game.askPlayerToGiveExtraParameter();
+									game.askPlayerToGiveExtraParameter(player, card);
 								} else {
 									playCard(output, player, card, targetPlayer);
 									card = null;
@@ -78,9 +78,7 @@ public class PlayerThread implements Runnable {
 								playCard(output, player, card, targetPlayer, additionalParameters);
 								card = null;
 								targetPlayer = null;
-								
 							}
-							//TODO figure out how to get extra parameters from player.
 						} catch (NumberFormatException e) {
 							output.println("Give a valid integer.");
 						} catch (GameException e) {

@@ -30,4 +30,8 @@ public abstract class Card {
 	public boolean requiresExtraParemeters() {
 		return false;
 	}
+
+	public String getExtraParameterDescription() {
+		return null;
+	}
 }
