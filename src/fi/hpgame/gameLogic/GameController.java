@@ -104,17 +104,21 @@ public class GameController {
 			broadCastToPlayers((player1.getName()
 					+ " played card " + card.getName()
 					+ " against " + player2.getName()));
+			if (playerService.gameIsOver()) {
+				System.out.println("The game is over");
+				this.setState(state.GAMEOVER);
+				this.broadCastToPlayers("Game is over. The winner of this round is " + playerService.getWinner());
+			}
 		} catch (GameException e) {
 			e.printStackTrace();
 		}
+		
 		notify();
 	}
 	public synchronized boolean allPlayersReady() {
 		return playerService.allPlayersReady();
 	}
-	private void putCard(Card card) {
-		cardService.addCard(card);
-	}
+	
 	
 	public synchronized void addPlayer(Player player, PrintWriter output) {
 		playerService.addPlayer(player);
@@ -162,6 +166,9 @@ public class GameController {
 		this.state = state;
 	}
 
+	private void putCard(Card card) {
+		cardService.addCard(card);
+	}
 
 
 

@@ -86,4 +86,18 @@ public class PlayerService {
 		
 	}
 
+	public boolean gameIsOver() {
+		return this.players.size() == 1;
+	}
+
+	public String getWinner() throws GameException {
+		if (players.isEmpty()) {
+			throw new GameException("Trying to request winner, although there are no players in game anymore. \n"
+					+ "The winner may have lost connection to server.");
+		} else if(!gameIsOver()){
+			throw new GameException("Trying to request winner although game is not over yet");
+		}
+		return players.get(0).getName();
+	}
+
 }

@@ -49,6 +49,10 @@ public class Server {
 							game.setState(GameState.PLAYING);
 							break;
 							
+						case GAMEOVER:
+							game.wait();
+							break;
+							
 						default:
 							game.wait();
 						}
