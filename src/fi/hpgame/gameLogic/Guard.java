@@ -10,7 +10,10 @@ public class Guard extends Card {
 
 	@Override
 	public void play(Player player1, Player player2, String additionalParameters) throws GameException {
-		if (player2.getHand().contains(additionalParameters)) {
+		if (GUARD.equals(additionalParameters)) {
+			sendMessageToPlayer("You can't guess for guard. Your turn dismissed.", player1);
+		}
+		else if (player2.getHand().contains(additionalParameters)) {
 			sendMessageToPlayer("The player " + player1.getName() + " guessed correctly that you have card " + additionalParameters, player2);
 			sendMessageToPlayer("Your guess was correct.", player1);
 			game.playerDropped(player2);
@@ -35,6 +38,6 @@ public class Guard extends Card {
 	@Override 
 	public String getExtraParameterDescription() {
 		return "Give the card you except the player to have. \n"
-				+ "The card must be one of the followings: Guard, King, Maid or Priest";
+				+ "The card must be one of the followings: King, Maid or Priest";
 	}
 }
