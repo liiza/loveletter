@@ -115,4 +115,13 @@ public class PlayerService {
 		
 	}
 
+	public void preparePlayersForGame() {
+		for (Player player : players) {
+			player.setStillPlaying(true);
+			player.setProtection(false);
+			player.setCards(new ArrayList<Card>());
+		}
+		
+	}
+
 }

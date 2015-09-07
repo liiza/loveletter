@@ -26,18 +26,15 @@ public class GameController {
 	
 	public static synchronized GameController initGame(){
 		GameController game = new GameController();
-		game.putCard(new King(game));
-		game.putCard(new Priest(game));
-		game.putCard(new King(game));
-		game.putCard(new Priest(game));
-		game.putCard(new Maid(game));
-		game.putCard(new Guard(game));
-
+	
+		
 		game.setState(GameState.PREPARATION);
 		return game;
 	}
 	
 	public synchronized void startGame() {
+		cardService.initDeck(this);
+		playerService.preparePlayersForGame();
 		this.setState(GameState.ON);
 		notify();
 	}

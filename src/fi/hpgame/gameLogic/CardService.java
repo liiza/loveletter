@@ -33,4 +33,15 @@ public class CardService {
 			System.out.println(card.getName());
 		}
 	}
+
+	public void initDeck(GameController game) {
+		cards = new ArrayList<Card>();
+		addCard(new King(game));
+		addCard(new Priest(game));
+		addCard(new King(game));
+		addCard(new Priest(game));
+		addCard(new Maid(game));
+		addCard(new Guard(game));
+
+	}
 }
