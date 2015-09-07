@@ -12,6 +12,8 @@ public class Player {
 	private List<Card> cards =  new ArrayList<Card>();
 
 	private boolean protection = false;
+
+	private boolean stillPlaying = true;
 	
 	public Player(String name) {
 		this.name = name;
@@ -66,5 +68,14 @@ public class Player {
 			return cards.get(cardIndex);
 		}
 	}
+
+	public void setStillPlaying(boolean b) {
+		this.stillPlaying  = b;
+	}
+	
+	public boolean isStillPlaying() {
+		return stillPlaying;
+	}
+	
 	
 }

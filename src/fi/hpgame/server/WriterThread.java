@@ -22,7 +22,7 @@ public class WriterThread implements Runnable{
 	
 	@Override
 	public void run() {
-	    while (true) {
+	    while (game.playerIsInGame(player)) {
 	    	try {
 				output.println(game.getMessage(player));
 			} catch (GameException e) {
@@ -31,7 +31,7 @@ public class WriterThread implements Runnable{
 			}
 	    	System.out.println("Writing message to user " + player.getName());
 	    }
-		//System.out.println("User " + player.getName() + " exited.");
+		System.out.println("User " + player.getName() + " exited.");
 	}
 
 }

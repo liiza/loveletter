@@ -137,6 +137,10 @@ public class GameController {
 		return playerService.playerIsInGame(player);
 
 	}
+	public void playerDropped(Player player) {
+		playerService.playerDropped(player);
+		
+	}
 
 	public synchronized boolean isPlayerInTurn(Player player) {
 		return playerService.isPlayerInTurn(player);
@@ -169,6 +173,8 @@ public class GameController {
 	private void putCard(Card card) {
 		cardService.addCard(card);
 	}
+
+	
 
 
 

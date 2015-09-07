@@ -3,6 +3,7 @@ package fi.hpgame.gameLogic;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.function.Predicate;
 
 public class PlayerService {
 
@@ -86,18 +87,34 @@ public class PlayerService {
 		
 	}
 
+	public void playerDropped(Player player) {
+		player.setStillPlaying(false);
+		
+	}
+	
 	public boolean gameIsOver() {
-		return this.players.size() == 1;
+		int playersInGame = 0;
+		for (Player player : players) {
+			if (player.isStillPlaying()) {
+				playersInGame++;
+			}
+		}
+		return playersInGame == 1;
 	}
 
 	public String getWinner() throws GameException {
-		if (players.isEmpty()) {
-			throw new GameException("Trying to request winner, although there are no players in game anymore. \n"
-					+ "The winner may have lost connection to server.");
-		} else if(!gameIsOver()){
+		if(!gameIsOver()){
 			throw new GameException("Trying to request winner although game is not over yet");
 		}
-		return players.get(0).getName();
+		for (Player player : players) {
+			if (player.isStillPlaying()) {
+				return player.getName();
+			}
+		}
+		throw new GameException("Trying to request winner, although there are no players in game anymore.");
+		
 	}
+
+
 
 }
