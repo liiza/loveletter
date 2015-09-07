@@ -127,7 +127,7 @@ public class GameController {
 	
 	public synchronized void removePlayer(Player player) throws GameException {
 		playerService.removePlayer(player);
-		broadCastToPlayers("Player player " + player.getName() + " dropped out."); 
+		broadCastToPlayers("Player player " + player.getName() + " quit."); 
 	}
 	public synchronized Player getPlayer(int i) throws GameException {
 		return playerService.getPlayer(i);
@@ -139,6 +139,7 @@ public class GameController {
 	}
 	public void playerDropped(Player player) {
 		playerService.playerDropped(player);
+		broadCastToPlayers("Player player " + player.getName() + " dropped out."); 
 		
 	}
 

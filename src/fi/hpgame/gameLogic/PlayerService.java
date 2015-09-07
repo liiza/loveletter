@@ -77,7 +77,7 @@ public class PlayerService {
 
 	public void playCard(Card card, Player player1, Player player2, String additionalParameters) throws GameException {
 		if (!isPlayerInTurn(player1)) {
-			throw new GameException("Player "+ player1.getName()+" is not in turn, but is trying to play");
+			throw new GameException("Player " + player1.getName() + " is not in turn, but is trying to play");
 		}
 		if (player1.hasProtection()) {
 			player1.setProtection(false);
@@ -114,7 +114,5 @@ public class PlayerService {
 		throw new GameException("Trying to request winner, although there are no players in game anymore.");
 		
 	}
-
-
 
 }

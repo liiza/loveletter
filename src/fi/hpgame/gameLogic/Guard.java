@@ -11,9 +11,9 @@ public class Guard extends Card {
 	@Override
 	public void play(Player player1, Player player2, String additionalParameters) throws GameException {
 		if (player2.getHand().contains(additionalParameters)) {
-			game.playerDropped(player2);
 			sendMessageToPlayer("The player " + player1.getName() + " guessed correctly that you have card " + additionalParameters, player2);
 			sendMessageToPlayer("Your guess was correct.", player1);
+			game.playerDropped(player2);
 		}
 		else {
 			sendMessageToPlayer("Your guess was incorrect. Player " + player2.getName() +
