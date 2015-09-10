@@ -14,4 +14,9 @@ public class Countess extends Card {
 
 	}
 
+	@Override
+	public Cards getType() {
+		return Cards.COUNTESSA;
+	}
+
 }

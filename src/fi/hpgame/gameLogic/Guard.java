@@ -2,7 +2,9 @@ package fi.hpgame.gameLogic;
 
 public class Guard extends Card {
 
-	private static String GUARD = "Guard";
+	private static final String GUARD = "Guard";
+	
+	private static final Cards type = Cards.GUARD;
 	
 	public Guard(GameController game) {
 		super(GUARD, game);
@@ -39,5 +41,10 @@ public class Guard extends Card {
 	public String getExtraParameterDescription() {
 		return "Give the card you except the player to have. \n"
 				+ "The card must be one of the followings: King, Maid or Priest";
+	}
+
+	@Override
+	public Cards getType() {
+		return type;
 	}
 }

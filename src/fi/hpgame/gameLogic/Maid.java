@@ -18,4 +18,9 @@ public class Maid extends Card {
 		return false;
 	}
 
+	@Override
+	public Cards getType() {
+		return Cards.MAID;
+	}
+
 }

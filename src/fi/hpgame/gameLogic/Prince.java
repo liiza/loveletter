@@ -21,4 +21,9 @@ public class Prince extends Card {
 		return true;
 	}
 
+	@Override
+	public Cards getType() {
+		return Cards.PRINCE;
+	}
+
 }

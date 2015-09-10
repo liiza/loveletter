@@ -18,6 +18,11 @@ public class Priest extends Card{
 	public boolean requiresTargetPlayer() {
 		return true;
 	}
+
+	@Override
+	public Cards getType() {
+		return Cards.PRIEST;
+	}
 	
 
 }

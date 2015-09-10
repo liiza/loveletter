@@ -22,4 +22,9 @@ public class King extends Card {
 		return true;
 	}
 
+	@Override
+	public Cards getType() {
+		return Cards.KING;
+	}
+
 }

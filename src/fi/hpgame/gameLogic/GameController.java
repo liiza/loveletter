@@ -40,7 +40,7 @@ public class GameController {
 	}
 	
 	public synchronized void dealCards(int howMany) throws GameException {
-		for (int i = 0;  i< howMany; i++) {
+		for (int i = 0; i < howMany; i++) {
 			for(Player player : playerService.getPlayers()) {
 				playerTakeCardFromDeck(player);
 			}
@@ -58,12 +58,24 @@ public class GameController {
 	}
 	
 	public synchronized void askPlayerToPlayCard() throws GameException {
-		String msg = "Select a card to play ";
+		String msg;
 		Player player = playerService.getPlayerInTurn();
 		List<Card> cards = player.getCards();
-		for (int i = 0; i < cards.size(); i++) {
-			msg += " [" + i + "] " + cards.get(i).getName();
+		
+		if (player.hasCard(Cards.COUNTESSA) && (player.hasCard(Cards.KING) && player.hasCard(Cards.PRINCE))) {
+			msg = "You must play card Countessa. ";
+			for (int i = 0; i < cards.size(); i++) {
+				if ( cards.get(i).getType() == Cards.COUNTESSA) {
+					msg += " [" + i + "] " + cards.get(i).getName();					
+				}
+			}
+		} else {
+			msg = "Select a card to play ";
+			for (int i = 0; i < cards.size(); i++) {
+				msg += " [" + i + "] " + cards.get(i).getName();
+			}
 		}
+	
 		sendMessageToPlayer(msg, player);
 	}
 	

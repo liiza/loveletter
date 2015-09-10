@@ -23,6 +23,8 @@ public abstract class Card {
 	
 	public abstract void play(Player player1, Player player2, String additionalParameters) throws GameException;
 	
+	public abstract Cards getType();
+	
 	public boolean requiresTargetPlayer() {
 		return false;
 	}

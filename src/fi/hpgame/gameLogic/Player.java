@@ -80,6 +80,14 @@ public class Player {
 	public void discardCards() {
 		this.cards.clear();
 	}
+
+	public boolean hasCard(Cards type) {
+		for (Card card : cards) {
+			if (card.getType() == type) {
+				return true;
+			}
+		} return false;
+	}
 	
 	
 }

@@ -16,4 +16,9 @@ public class Princess extends Card {
 
 	}
 
+	@Override
+	public Cards getType() {
+		return Cards.PRINCESS;
+	}
+
 }
