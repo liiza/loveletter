@@ -42,14 +42,19 @@ public class GameController {
 	public synchronized void dealCards(int howMany) throws GameException {
 		for (int i = 0;  i< howMany; i++) {
 			for(Player player : playerService.getPlayers()) {
-				if (!cardService.isEmpty()){
-					Card card = cardService.getFirstCard();
-					playerService.giveCard(card, player);
-					sendMessageToPlayer("You were given a card " + card.getName(),  player);
-				}
+				playerTakeCardFromDeck(player);
 			}
 		}
 		playerService.cardsDealed();
+	}
+	
+	public void playerTakeCardFromDeck(Player player) throws GameException{
+		if (!cardService.isEmpty()){
+			Card card = cardService.getFirstCard();
+			playerService.giveCard(card, player);
+			sendMessageToPlayer("You were given a card " + card.getName(),  player);
+		}
+
 	}
 	
 	public synchronized void askPlayerToPlayCard() throws GameException {
@@ -72,16 +77,12 @@ public class GameController {
 			}
 		}
 		String msg = "Choose player to play card " + card.getName() +" against to ";
-		List<Player> players = playerService.getPlayers();
-		for (int i = 0; i < players.size(); i++) {
-			if (!players.get(i).hasProtection()) {
-				msg += " [" + i + "] " + players.get(i).getName(); 						
-			}
-			
-		}
+		msg += playerService.getListOfPlayers();
+		
 		sendMessageToPlayer(msg, player);
 	}
 
+	
 	public void askPlayerToGiveExtraParameter(Player player, Card card) {
 		if (!playerService.isPlayerInTurn(player)) {
 			try {

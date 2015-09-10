@@ -124,4 +124,15 @@ public class PlayerService {
 		
 	}
 
+	public String getListOfPlayers() {
+		String playersList = "";
+		for (int i = 0; i < players.size(); i++) {
+			if (!players.get(i).hasProtection()) {
+				 playersList += " [" + i + "] " + players.get(i).getName(); 						
+			}
+			
+		} 
+		return playersList;
+	}
+
 }

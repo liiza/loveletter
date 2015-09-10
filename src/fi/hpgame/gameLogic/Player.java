@@ -76,6 +76,10 @@ public class Player {
 	public boolean isStillPlaying() {
 		return stillPlaying;
 	}
+
+	public void discardCards() {
+		this.cards.clear();
+	}
 	
 	
 }
