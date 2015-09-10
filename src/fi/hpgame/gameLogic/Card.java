@@ -36,4 +36,8 @@ public abstract class Card {
 	public String getExtraParameterDescription() {
 		return null;
 	}
+
+	public int getPoints() {
+		return 0;
+	}
 }
