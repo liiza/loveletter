@@ -54,13 +54,20 @@ public class PlayerService {
 	public Player getPlayerInTurn() throws GameException {
 		if (allPlayersReady()) {
 			throw new GameException("All players have already played in this round");
+		} else if (gameIsOver() ){
+			throw new GameException("Game is over");
 		}
-		// TODO what if player has dropped
+		
+		while (!players.get(playerInTurn).isStillPlaying()) {
+			playerInTurn++;
+			if (playerInTurn == players.size()) {
+				throw new GameException("All players have already played in this round");
+			}
+		}
 		return players.get(playerInTurn);
 	}
 
 	public boolean allPlayersReady() {
-		// TODO notice that some players might have dropped
 		System.out.println(playerInTurn + " == " + players.size());
 		return playerInTurn == players.size();
 	}
