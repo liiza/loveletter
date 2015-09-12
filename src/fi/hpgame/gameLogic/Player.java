@@ -3,6 +3,8 @@ package fi.hpgame.gameLogic;
 import java.util.ArrayList;
 import java.util.List;
 
+import fi.hpgame.gameLogic.cards.Card;
+
 
 
 public class Player {

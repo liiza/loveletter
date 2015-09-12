@@ -6,10 +6,10 @@ import java.io.PrintWriter;
 import java.net.Socket;
 import java.util.List;
 
-import fi.hpgame.gameLogic.Card;
 import fi.hpgame.gameLogic.GameController;
 import fi.hpgame.gameLogic.GameException;
 import fi.hpgame.gameLogic.Player;
+import fi.hpgame.gameLogic.cards.Card;
 
 public class PlayerThread implements Runnable {
 	private Socket socket;

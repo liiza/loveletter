@@ -5,6 +5,8 @@ import java.util.Collections;
 import java.util.List;
 import java.util.function.Predicate;
 
+import fi.hpgame.gameLogic.cards.Card;
+
 public class PlayerService {
 
 	private List<Player> players = Collections.synchronizedList((new ArrayList<Player>()));
@@ -53,18 +55,22 @@ public class PlayerService {
 		if (allPlayersReady()) {
 			throw new GameException("All players have already played in this round");
 		}
+		// TODO what if player has dropped
 		return players.get(playerInTurn);
 	}
 
+	public boolean allPlayersReady() {
+		// TODO notice that some players might have dropped
+		System.out.println(playerInTurn + " == " + players.size());
+		return playerInTurn == players.size();
+	}
+	
 	public boolean isPlayerInTurn(Player player) {
 		System.out.println("Index of player " + player.getName() + " is " +  players.indexOf(player) + ". playerInTurn is " + playerInTurn);
 		return players.indexOf(player) == playerInTurn;
 	}
 	
-	public boolean allPlayersReady() {
-		System.out.println(playerInTurn + " == " + players.size());
-		return playerInTurn == players.size();
-	}
+
 	public void cardsDealed() throws GameException{
 		playerInTurn = 0;
 	}

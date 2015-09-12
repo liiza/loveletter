@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
+import fi.hpgame.gameLogic.cards.Card;
 import fi.hpgame.messages.MessageService;
 import fi.hpgame.server.WriterThread;
 

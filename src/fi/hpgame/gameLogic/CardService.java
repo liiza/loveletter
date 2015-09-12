@@ -5,6 +5,12 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
+import fi.hpgame.gameLogic.cards.Card;
+import fi.hpgame.gameLogic.cards.Guard;
+import fi.hpgame.gameLogic.cards.King;
+import fi.hpgame.gameLogic.cards.Maid;
+import fi.hpgame.gameLogic.cards.Priest;
+
 public class CardService {
 
 
