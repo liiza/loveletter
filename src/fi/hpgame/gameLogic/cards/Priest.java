@@ -7,6 +7,8 @@ import fi.hpgame.gameLogic.Player;
 public class Priest extends Card{
 
 	private static String PRIEST = "Priest";
+	
+	private static int points = 2;
 
 	public Priest(GameController game) {
 		super(PRIEST, game);
@@ -26,6 +28,11 @@ public class Priest extends Card{
 	@Override
 	public Cards getType() {
 		return Cards.PRIEST;
+	}
+
+	@Override
+	public int getPoints() {
+		return points;
 	}
 	
 

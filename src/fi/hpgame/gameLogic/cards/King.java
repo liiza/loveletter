@@ -9,6 +9,8 @@ import fi.hpgame.gameLogic.Player;
 public class King extends Card {
 
 	private static String KING = "King";
+	
+	private static int points = 6;
 
 	public King(GameController game) {
 		super(KING, game);
@@ -29,6 +31,11 @@ public class King extends Card {
 	@Override
 	public Cards getType() {
 		return Cards.KING;
+	}
+
+	@Override
+	public int getPoints() {
+		return points;
 	}
 
 }

@@ -7,8 +7,10 @@ import fi.hpgame.gameLogic.Player;
 
 public abstract class Card {
 	protected GameController game;
+	
 	private String name;
 
+	
 	public Card(String s, GameController game) {
 		this.name = s;
 		this.game = game;
@@ -30,6 +32,8 @@ public abstract class Card {
 	
 	public abstract Cards getType();
 	
+	public abstract int getPoints();
+	
 	public boolean requiresTargetPlayer() {
 		return false;
 	}
@@ -42,7 +46,5 @@ public abstract class Card {
 		return null;
 	}
 
-	public int getPoints() {
-		return 0;
-	}
+
 }

@@ -10,6 +10,8 @@ public class Guard extends Card {
 	private static final String GUARD = "Guard";
 	
 	private static final Cards type = Cards.GUARD;
+
+	private static int points = 1;
 	
 	public Guard(GameController game) {
 		super(GUARD, game);
@@ -51,5 +53,10 @@ public class Guard extends Card {
 	@Override
 	public Cards getType() {
 		return type;
+	}
+
+	@Override
+	public int getPoints() {
+		return points ;
 	}
 }

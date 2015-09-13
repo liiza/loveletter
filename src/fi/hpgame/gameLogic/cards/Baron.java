@@ -6,7 +6,11 @@ import fi.hpgame.gameLogic.GameException;
 import fi.hpgame.gameLogic.Player;
 
 public class Baron extends Card {
+	
 	private static String BARON = "Baron";
+	private static int points = 3;
+	
+	
 	
 	public Baron(GameController game) {
 		super(BARON, game);
@@ -35,6 +39,11 @@ public class Baron extends Card {
 	@Override
 	public Cards getType() {
 		return Cards.BARON;
+	}
+
+	@Override
+	public int getPoints() {
+		return points;
 	}
 
 }
