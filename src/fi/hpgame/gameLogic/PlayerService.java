@@ -137,6 +137,7 @@ public class PlayerService {
 			player.setProtection(false);
 			player.setCards(new ArrayList<Card>());
 		}
+		playerInTurn = 0;
 		
 	}
 

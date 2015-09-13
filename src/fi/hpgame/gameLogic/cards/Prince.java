@@ -21,6 +21,7 @@ public class Prince extends Card {
 	public void play(Player player1, Player player2, String additionalParameters)
 			throws GameException {
 		player2.discardCards();
+		sendMessageToPlayer("You discarded all you cards.", player2);
 		game.playerTakeCardFromDeck(player2);
 
 	}
