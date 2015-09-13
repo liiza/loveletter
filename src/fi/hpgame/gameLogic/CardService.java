@@ -97,7 +97,7 @@ public class CardService {
 	private void addCards(Class<?> clazz, int howMany, GameController game) {
 		Constructor<?> constructor;
 		try {
-			constructor = clazz.getConstructor(String.class);
+			constructor = clazz.getConstructor(GameController.class);
 			for (int i = 0; i <howMany; i++) {
 				cards.add((Card) constructor.newInstance(game));
 			}

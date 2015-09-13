@@ -22,9 +22,17 @@ public class Baron extends Card {
 			throws GameException {
 		for (Card card : player1.getCards()) {
 			if (card.getType() != Cards.BARON) {
-				if (card.getPoints() > player2.getCard(0).getPoints()) {
+				
+				Card opponent = player2.getCard(0);
+				String msgAboutBaronAction = player1.getName() + " played card " + card.getName() + " : " + card.getPoints() +
+						" against card which is " + opponent.getName() + " : " + opponent.getPoints();
+				
+				sendMessageToPlayer(msgAboutBaronAction, player2);
+
+				if (card.getPoints() > opponent.getPoints()) {
 					game.playerDropped(player2);
-				} else if (card.getPoints() < player2.getCard(0).getPoints()){
+				} else if (card.getPoints() < opponent.getPoints()){
+					sendMessageToPlayer(msgAboutBaronAction, player1);
 					game.playerDropped(player1);
 				}
 			}

@@ -92,6 +92,9 @@ public class PlayerService {
 		if (!isPlayerInTurn(player1)) {
 			throw new GameException("Player " + player1.getName() + " is not in turn, but is trying to play");
 		}
+		if (player2 != null && !player2.isStillPlaying()) {
+			throw new GameException("Trying to attack player who is no longer playing.");
+		}
 		if (player1.hasProtection()) {
 			player1.setProtection(false);
 		}
