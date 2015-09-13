@@ -34,6 +34,8 @@ public abstract class Card {
 	
 	public abstract int getPoints();
 	
+	public abstract int howManyToAreInDeck();
+	
 	public boolean requiresTargetPlayer() {
 		return false;
 	}

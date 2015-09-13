@@ -6,8 +6,11 @@ import fi.hpgame.gameLogic.Player;
 
 public class Maid extends Card {
 
-	private static String MAID = "Maid";
-	private static int points = 4;
+	private static final String MAID = "Maid";
+	
+	private static final int points = 4;
+	
+	public static final int howMany = 2;
 
 	public Maid(GameController game) {
 		super(MAID, game);
@@ -31,6 +34,11 @@ public class Maid extends Card {
 	@Override
 	public int getPoints() {
 		return points ;
+	}
+
+	@Override
+	public int howManyToAreInDeck() {
+		return howMany;
 	}
 
 }

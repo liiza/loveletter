@@ -9,7 +9,9 @@ public class Princess extends Card {
 
 	private static final String PRINCESS = "Princess";
 	
-	private static int points = 8;
+	private static final int points = 8;
+
+	public static final int howMany = 1;
 
 	public Princess(GameController game) {
 		super(PRINCESS, game);
@@ -33,4 +35,9 @@ public class Princess extends Card {
 		return points;
 	}
 
+	@Override
+	public int howManyToAreInDeck() {
+		return howMany;
+	}
+	
 }

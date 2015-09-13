@@ -10,6 +10,8 @@ public class Prince extends Card {
 	private static final String PRINCE = "Prince";
 	
 	private static final int points = 5;
+	
+	public static final int howMany = 2;	
 
 	public Prince(GameController game) {
 		super(PRINCE, game);
@@ -36,6 +38,11 @@ public class Prince extends Card {
 	@Override
 	public int getPoints() {
 		return points;
+	}
+
+	@Override
+	public int howManyToAreInDeck() {
+		return howMany;
 	}
 
 }

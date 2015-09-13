@@ -1,15 +1,21 @@
 package fi.hpgame.gameLogic;
 
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
 
+import fi.hpgame.gameLogic.cards.Baron;
 import fi.hpgame.gameLogic.cards.Card;
+import fi.hpgame.gameLogic.cards.Countess;
 import fi.hpgame.gameLogic.cards.Guard;
 import fi.hpgame.gameLogic.cards.King;
 import fi.hpgame.gameLogic.cards.Maid;
 import fi.hpgame.gameLogic.cards.Priest;
+import fi.hpgame.gameLogic.cards.Prince;
+import fi.hpgame.gameLogic.cards.Princess;
 
 public class CardService {
 
@@ -41,13 +47,74 @@ public class CardService {
 	}
 
 	public void initDeck(GameController game) {
-		cards = new ArrayList<Card>();
-		addCard(new King(game));
-		addCard(new Priest(game));
-		addCard(new King(game));
-		addCard(new Priest(game));
-		addCard(new Maid(game));
-		addCard(new Guard(game));
-
+		cards.clear();
+		
+		for (Cards type : Cards.values()) {
+			try {
+				addCardsOfType(type, game);
+			} catch (GameException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+		
 	}
+
+	private void addCardsOfType(Cards type, GameController game) throws GameException {
+
+		switch(type) {
+			case KING:
+				addCards(King.class, King.howMany, game);
+				break;
+			case GUARD:
+				addCards(Guard.class, Guard.howMany, game);
+				break;
+			case BARON:
+				addCards(Baron.class, Baron.howMany, game);
+				break;
+			case PRINCESS:
+				addCards(Princess.class, Princess.howMany, game);
+				break;
+			case MAID:
+				addCards(Maid.class, Maid.howMany, game);
+				break;
+			case PRINCE:
+				addCards(Prince.class, Prince.howMany, game);
+				break;
+			case PRIEST:
+				addCards(Priest.class, Priest.howMany, game);
+				break;
+			case COUNTESSA:
+				addCards(Countess.class, Countess.howMany, game);
+				break;
+			default:
+				throw new GameException("Trying to initialize non existing card.");
+			
+		}
+	
+	}
+
+	private void addCards(Class<?> clazz, int howMany, GameController game) {
+		Constructor<?> constructor;
+		try {
+			constructor = clazz.getConstructor(String.class);
+			for (int i = 0; i <howMany; i++) {
+				cards.add((Card) constructor.newInstance(game));
+			}
+		} catch (NoSuchMethodException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (SecurityException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InstantiationException | IllegalAccessException
+				| IllegalArgumentException | InvocationTargetException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		
+	}
+
+	
 }

@@ -10,6 +10,8 @@ public class Priest extends Card{
 	
 	private static int points = 2;
 
+	public static int howMany = 2;
+
 	public Priest(GameController game) {
 		super(PRIEST, game);
 	}
@@ -33,6 +35,11 @@ public class Priest extends Card{
 	@Override
 	public int getPoints() {
 		return points;
+	}
+
+	@Override
+	public int howManyToAreInDeck() {
+		return howMany ;
 	}
 	
 

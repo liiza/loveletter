@@ -7,10 +7,11 @@ import fi.hpgame.gameLogic.Player;
 
 public class Baron extends Card {
 	
-	private static String BARON = "Baron";
-	private static int points = 3;
+	private static final String BARON = "Baron";
 	
+	private static final int points = 3;
 	
+	public static final int howMany = 2;	
 	
 	public Baron(GameController game) {
 		super(BARON, game);
@@ -44,6 +45,11 @@ public class Baron extends Card {
 	@Override
 	public int getPoints() {
 		return points;
+	}
+
+	@Override
+	public int howManyToAreInDeck() {
+		return howMany;
 	}
 
 }

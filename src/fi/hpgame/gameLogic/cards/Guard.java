@@ -11,7 +11,9 @@ public class Guard extends Card {
 	
 	private static final Cards type = Cards.GUARD;
 
-	private static int points = 1;
+	private static final int points = 1;
+
+	public static final int howMany = 5;
 	
 	public Guard(GameController game) {
 		super(GUARD, game);
@@ -58,5 +60,10 @@ public class Guard extends Card {
 	@Override
 	public int getPoints() {
 		return points ;
+	}
+
+	@Override
+	public int howManyToAreInDeck() {
+		return howMany;
 	}
 }
