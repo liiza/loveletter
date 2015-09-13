@@ -115,11 +115,7 @@ public class GameController {
 			broadCastToPlayers((player1.getName()
 					+ " played card " + card.getName()
 					+ " against " + player2.getName()));
-			if (playerService.gameIsOver()) {
-				System.out.println("The game is over");
-				this.setState(state.GAMEOVER);
-				this.broadCastToPlayers("Game is over. The winner of this round is " + playerService.getWinner());
-			}
+		
 		} catch (GameException e) {
 			e.printStackTrace();
 		}
@@ -184,6 +180,30 @@ public class GameController {
 
 	private void putCard(Card card) {
 		cardService.addCard(card);
+	}
+
+	public boolean gameIsOver() {
+		return playerService.gameIsOver();
+	}
+	
+	public String getWinner() throws GameException{
+		return playerService.getWinner();
+	}
+
+	public boolean deckIsEmpty() {
+		return cardService.isEmpty();
+	}
+
+	public String getWinnerInLastRound() throws GameException {
+		Player player =  playerService.getPlayerWithHighestHand();
+		if (player == null) {
+			throw new GameException("Winner could not be determined for some reason");
+		}
+		return player.getName();
+	}
+
+	public void printAllPlayerHands() {
+		broadCastToPlayers(playerService.getAllPlayerHands());
 	}
 
 	

@@ -95,6 +95,9 @@ public class PlayerService {
 		if (player2 != null && !player2.isStillPlaying()) {
 			throw new GameException("Trying to attack player who is no longer playing.");
 		}
+		if (!player1.hasCard(card.getType())) {
+			throw new GameException("Trying to play a card that user doesn't have.");
+		}
 		if (player1.hasProtection()) {
 			player1.setProtection(false);
 		}
@@ -137,7 +140,6 @@ public class PlayerService {
 			player.setProtection(false);
 			player.setCards(new ArrayList<Card>());
 		}
-		playerInTurn = 0;
 		
 	}
 
@@ -150,6 +152,29 @@ public class PlayerService {
 			
 		} 
 		return playersList;
+	}
+
+	public Player getPlayerWithHighestHand() {
+		int max = 0;
+		Player winner = null;
+		for (Player player : players) {
+			if (player.getValueOfHand() > max) {
+				winner = player;
+				max = player.getValueOfHand(); 
+			}
+		}
+		return winner;
+	}
+
+	public String getAllPlayerHands() {
+		String hands = "";
+		for (Player player: players) {
+			if (players.indexOf(player)!=0) {
+				hands += ", ";
+			}
+			hands += player.getName() + " :" + player.getHand();
+		}
+		return hands;
 	}
 
 }

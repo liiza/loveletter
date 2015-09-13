@@ -36,6 +36,11 @@ public class Server {
 							game.setState(GameState.PLAYING);
 							break;
 						case PLAYING:
+							if (game.gameIsOver()) {
+								game.broadCastToPlayers("Game is over. The winner of this round is " + game.getWinner());
+								game.setState(GameState.GAMEOVER);
+								break;
+							}
 							if (game.allPlayersReady()) {
 								System.out.println("Dealing new cards");
 								game.setState(GameState.DEALNEWCARDS);
@@ -44,16 +49,30 @@ public class Server {
 							game.askPlayerToPlayCard();
 							game.wait();
 							break;
+							
 						case DEALNEWCARDS:
+							if (game.deckIsEmpty()) {
+								game.setState(GameState.FINALROUND);
+								break;
+							}
 							game.dealCards(1);
 							game.setState(GameState.PLAYING);
 							break;
 							
+						case FINALROUND:
+							game.broadCastToPlayers("Game is over. The winner of this round is " + game.getWinnerInLastRound());
+							game.printAllPlayerHands();
+							game.setState(GameState.GAMEOVER);
+							
+							break;
+							
 						case GAMEOVER:
+							
 							game.wait();
 							break;
 							
 						default:
+							System.out.println("The game is over");
 							game.wait();
 						}
 				}

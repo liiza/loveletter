@@ -47,6 +47,7 @@ public class Player {
 	
 	public void playCard(Card card, Player player2, String additionalParameters) throws GameException {
 		card.play(this, player2, additionalParameters);
+		cards.remove(card);
 	}
 
 	public void setCards(List<Card> cards) {
@@ -79,10 +80,6 @@ public class Player {
 		return stillPlaying;
 	}
 
-	public void discardCards() {
-		this.cards.clear();
-	}
-
 	public boolean hasCard(Cards type) {
 		for (Card card : cards) {
 			if (card.getType() == type) {
@@ -91,5 +88,18 @@ public class Player {
 		} return false;
 	}
 	
+	public void discardCards() {
+		this.cards.clear();
+	}
+
+	public int getValueOfHand() {
+		int points = 0;
+		for (Card card : cards) {
+			points += card.getPoints();
+		}
+		return points;
+	}
+	
+
 	
 }
