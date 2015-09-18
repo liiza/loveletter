@@ -4,7 +4,6 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.PrintWriter;
 import java.net.Socket;
-import java.util.List;
 
 import fi.hpgame.gameLogic.GameController;
 import fi.hpgame.gameLogic.GameException;
@@ -29,7 +28,9 @@ public class PlayerThread implements Runnable {
 					true);
 			BufferedReader input = new BufferedReader(new InputStreamReader(
 					this.socket.getInputStream()));
+			
 
+			
 			output.println("Server response : ok");
 
 			Player player = null;
