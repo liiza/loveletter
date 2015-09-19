@@ -1,9 +1,5 @@
 package fi.hpgame.gameLogic;
 
-import java.io.PrintWriter;
-import java.net.Socket;
-import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import fi.hpgame.gameLogic.cards.Card;
@@ -28,16 +24,12 @@ public class GameController {
 	
 	public static synchronized GameController initGame(){
 		GameController game = new GameController();
-	
-		
-		game.setState(GameState.PREPARATION);
 		return game;
 	}
 	
 	public synchronized void startGame() {
 		cardService.initDeck(this);
 		playerService.preparePlayersForGame();
-		this.setState(GameState.ON);
 		notify();
 	}
 	

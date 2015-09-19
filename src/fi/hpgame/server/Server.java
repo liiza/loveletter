@@ -14,7 +14,9 @@ public class Server {
 	public static void main(String[] args) {
 		
 		System.out.println("Let the game begin.");
+		
 		GameController game = GameController.initGame();
+		game.setState(GameState.PREPARATION);
 
 		try {
 			new Thread(new ListenerThread(new ServerSocket(portNumber), game)).start();
@@ -29,6 +31,7 @@ public class Server {
 					switch (game.getState()) {
 						case PREPARATION:
 							game.wait();
+							game.setState(GameState.ON);
 							break;
 						case ON:
 							// Give two cards to each player at the beginning
