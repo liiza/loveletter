@@ -11,27 +11,20 @@ import fi.hpgame.gameLogic.Player;
 import fi.hpgame.gameLogic.cards.Card;
 
 public class PlayerThread implements Runnable {
-	private Socket socket;
+	private SocketCommunication playerSocket;
 	private GameController game;
 	private boolean gameIsOn = true;
 
-	public PlayerThread(Socket clientSocket, GameController game) {
-		this.socket = clientSocket;
+	public PlayerThread(SocketCommunication socket, GameController game) {
+		this.playerSocket = socket;
 		this.game = game;
 	}
 
 	@Override
 	public void run() {
 		try {
-
-			PrintWriter output = new PrintWriter(this.socket.getOutputStream(),
-					true);
-			BufferedReader input = new BufferedReader(new InputStreamReader(
-					this.socket.getInputStream()));
 			
-
-			
-			output.println("Server response : ok");
+			playerSocket.write("Server response : ok");
 
 			Player player = null;
 			Player targetPlayer = null;
@@ -39,7 +32,7 @@ public class PlayerThread implements Runnable {
 			
 			while (gameIsOn) {
 
-				String userInput = input.readLine();
+				String userInput = playerSocket.read();
 				
 				//TODO is this correct way to determine the client socket closing?
 				if (userInput == null || userInput.equals("end")) {
@@ -48,7 +41,7 @@ public class PlayerThread implements Runnable {
 					startGame();
 				} else {
 					if (player == null) {
-						player = joinGame(output, userInput);
+						player = joinGame(userInput);
 					} else if (game.isPlayerInTurn(player)) {
 						try {
 							if (card == null) {
@@ -58,7 +51,7 @@ public class PlayerThread implements Runnable {
 								} else if (card.requiresExtraParemeters()){
 									game.askPlayerToGiveExtraParameter(player, card);
 								} else {
-									playCard(output, player, card, player);
+									playCard(player, card, player);
 									card = null;
 									targetPlayer = null;
 								}
@@ -69,24 +62,24 @@ public class PlayerThread implements Runnable {
 								if (card.requiresExtraParemeters()) {
 									game.askPlayerToGiveExtraParameter(player, card);
 								} else {
-									playCard(output, player, card, targetPlayer);
+									playCard( player, card, targetPlayer);
 									card = null;
 									targetPlayer = null;
 								}
 								
 							} else {
 								String additionalParameters = userInput;
-								playCard(output, player, card, targetPlayer, additionalParameters);
+								playCard(player, card, targetPlayer, additionalParameters);
 								card = null;
 								targetPlayer = null;
 							}
 						} catch (NumberFormatException e) {
-							output.println("Give a valid integer.");
+							playerSocket.write("Give a valid integer.");
 						} catch (GameException e) {
-							output.println("Give a number that is range.");
+							playerSocket.write("Give a number that is range.");
 						}
 					} else {
-						output.println("Not your turn!");
+						playerSocket.write("Not your turn!");
 					}
 				}
 			}
@@ -95,19 +88,19 @@ public class PlayerThread implements Runnable {
 		}
 	}
 
-	private void playCard(PrintWriter output, Player player, Card card,
+	private void playCard(Player player, Card card,
 			Player player2) {
-		playCard(output, player, card,
+		playCard(player, card,
 				player2, null);
 	}
 	
-	private void playCard(PrintWriter output, Player player, Card card,
+	private void playCard(Player player, Card card,
 			Player player2, String additionalParameters) {
-		output.println(("You played card "
+		playerSocket.write(("You played card "
 				+ card.getName() + " towards player " + player2
 				.getName()));
 		game.playCard(card, player, player2, additionalParameters);
-		output.println("You have following cards: "
+		playerSocket.write("You have following cards: "
 				+ player.getHand());	
 
 	}
@@ -130,9 +123,9 @@ public class PlayerThread implements Runnable {
 
 	}
 
-	private Player joinGame(PrintWriter output, String userInput) {
+	private Player joinGame(String userInput) {
 		Player player = new Player(userInput);
-		game.addPlayer(player, output);
+		game.addPlayer(player, playerSocket);
 		game.broadCastToPlayers("Added new player " + player.getName());
 		return player;
 	}

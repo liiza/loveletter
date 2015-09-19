@@ -8,6 +8,7 @@ import java.util.List;
 
 import fi.hpgame.gameLogic.cards.Card;
 import fi.hpgame.messages.MessageService;
+import fi.hpgame.server.PlayerCommunication;
 import fi.hpgame.server.WriterThread;
 
 public class GameController {
@@ -127,9 +128,9 @@ public class GameController {
 	}
 	
 	
-	public synchronized void addPlayer(Player player, PrintWriter output) {
+	public synchronized void addPlayer(Player player, PlayerCommunication communication) {
 		playerService.addPlayer(player);
-		new Thread(new WriterThread(output, player, this)).start();
+		new Thread(new WriterThread(communication, player, this)).start();
 	}
 	
 	public synchronized void removePlayer(Player player) throws GameException {
@@ -165,9 +166,9 @@ public class GameController {
 	}
 
 
-	public char[] getMessage(Player player) throws GameException {
+	public String getMessage(Player player) throws GameException {
 
-		return msgService.getMessage(player).toCharArray();
+		return msgService.getMessage(player);
 	}
 
 	public GameState getState() {

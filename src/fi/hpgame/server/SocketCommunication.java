@@ -16,9 +16,6 @@ public class SocketCommunication implements PlayerCommunication {
 
 	public SocketCommunication(Socket socket){
 		this.socket = socket;
-	}
-	
-	public void init() {
 		try {
 			this.output = new PrintWriter(this.socket.getOutputStream(),
 					true);
@@ -28,17 +25,18 @@ public class SocketCommunication implements PlayerCommunication {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
 	}
 	
 	@Override
 	public void write(String s) {
-		this.output.write(s);
+		System.out.println("Writing message " + s + " to user.");
+		this.output.println(s);
 		
 	}
 
 	@Override
 	public String read() throws IOException {
+
 		return this.input.readLine();
 	}
 

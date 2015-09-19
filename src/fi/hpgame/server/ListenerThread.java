@@ -26,7 +26,7 @@ public class ListenerThread implements Runnable {
 			
 				System.out.println("Client connected.");
 				
-				new Thread(new PlayerThread(clientSocket, game)).start();
+				new Thread(new PlayerThread(new SocketCommunication(clientSocket), game)).start();
 				
 			}
 		} catch (IOException e) {

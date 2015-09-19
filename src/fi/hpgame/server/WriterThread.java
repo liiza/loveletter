@@ -8,14 +8,14 @@ import fi.hpgame.gameLogic.Player;
 
 public class WriterThread implements Runnable{
 
-	private PrintWriter output;
+	private PlayerCommunication playerCommunication;
 	
 	private Player player;
 	
 	private GameController game;
 	
-	public WriterThread(PrintWriter output, Player player, GameController game) {
-		this.output = output;
+	public WriterThread(PlayerCommunication playerCommunication, Player player, GameController game) {
+		this.playerCommunication = playerCommunication;
 		this.player = player;
 		this.game = game;
 	}
@@ -24,7 +24,7 @@ public class WriterThread implements Runnable{
 	public void run() {
 	    while (game.playerIsInGame(player)) {
 	    	try {
-				output.println(game.getMessage(player));
+	    		playerCommunication.write(game.getMessage(player));
 			} catch (GameException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
