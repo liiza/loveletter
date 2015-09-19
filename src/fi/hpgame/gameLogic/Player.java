@@ -99,7 +99,10 @@ public class Player {
 		}
 		return points;
 	}
-	
+
+	public boolean isAI() {
+		return false;
+	}
 
 	
 }

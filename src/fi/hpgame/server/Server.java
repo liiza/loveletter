@@ -6,6 +6,7 @@ import java.util.concurrent.locks.Lock;
 
 import fi.hpgame.gameLogic.GameController;
 import fi.hpgame.gameLogic.GameState;
+import fi.hpgame.gameLogic.Player;
 
 public class Server {
 	// TODO read from configuration
@@ -34,6 +35,7 @@ public class Server {
 							game.setState(GameState.ON);
 							break;
 						case ON:
+							//game.addAIPlayer("AI-Paavo");
 							game.dealCards(1);
 							game.setState(GameState.PLAYING);
 							break;

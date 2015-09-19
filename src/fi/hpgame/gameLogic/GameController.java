@@ -2,6 +2,7 @@ package fi.hpgame.gameLogic;
 
 import java.util.List;
 
+import fi.hpgame.AI.AIPlayer;
 import fi.hpgame.gameLogic.cards.Card;
 import fi.hpgame.messages.MessageService;
 import fi.hpgame.server.PlayerCommunication;
@@ -47,7 +48,13 @@ public class GameController {
 	public synchronized void playerInTurnPlays() throws GameException {
 		Player player = playerService.getPlayerInTurn();
 		playerTakeCardFromDeck(player);
-		askPlayerToPlayCard(player);
+		
+		if (player.isAI()) {
+			((AIPlayer)player).makeDecision();
+		} else {
+			askPlayerToPlayCard(player);
+		}
+	
 		
 	}
 	
@@ -128,6 +135,9 @@ public class GameController {
 		return playerService.allPlayersReady();
 	}
 	
+	public synchronized void addAIPlayer(String name) {
+		playerService.addPlayer(new AIPlayer(name, this));
+	}
 	
 	public synchronized void addPlayer(Player player, PlayerCommunication communication) {
 		playerService.addPlayer(player);
@@ -158,12 +168,15 @@ public class GameController {
 
 	
 	public void sendMessageToPlayer(String msg, Player player) {
-		msgService.addMessage("Private message to player " + player.getName() + " : " + msg, player);
+		if (!player.isAI()) {
+			msgService.addMessage("Private message to player " + player.getName() + " : " + msg, player);			
+		}
+
 	}
 	
 	public void broadCastToPlayers(String msg) {
 		System.out.println ("Broadcasting to players");
-		msgService.addMessage("BroadCasted message " + msg, playerService.getPlayers());
+		msgService.addMessage("BroadCasted message " + msg, playerService.getNonAIPlayers());
 	}
 
 

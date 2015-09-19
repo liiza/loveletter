@@ -38,6 +38,16 @@ public class PlayerService {
 	public List<Player> getPlayers() {
 		return this.players;
 	}
+	
+	public List<Player> getNonAIPlayers() {
+		List<Player> nonAIplayers = new ArrayList<Player>();
+		for (Player player : players) {
+			if (!player.isAI()) {
+				nonAIplayers.add(player);
+			}
+		}
+		return nonAIplayers;
+	}
 
 	public Player getPlayer(int i) throws GameException {
 		if (i >= 0 && i < players.size()) {
@@ -176,5 +186,7 @@ public class PlayerService {
 		}
 		return hands;
 	}
+
+
 
 }
