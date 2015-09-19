@@ -5,19 +5,26 @@ import fi.hpgame.gameLogic.cards.Card;
 
 public class Decision {
 
+	private Card card;
+	private Player targetPlayer;
+	private String extraParameters;
+
+	public Decision(Card card, Player targetPlayer, String extraParameters) {
+		this.card = card;
+		this.targetPlayer = targetPlayer;
+		this.extraParameters = extraParameters;
+	}
+
 	public Card getCard() {
-		// TODO Auto-generated method stub
-		return null;
+		return card;
 	}
 
 	public Player getTargetPlayer() {
-		// TODO Auto-generated method stub
-		return null;
+		return targetPlayer;
 	}
 
 	public String getAdditionalParameters() {
-		// TODO Auto-generated method stub
-		return null;
+		return extraParameters;
 	}
 
 }

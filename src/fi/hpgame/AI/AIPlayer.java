@@ -16,9 +16,8 @@ public class AIPlayer extends Player {
 	public boolean isAI() {
 		return true;
 	}
-	public void makeDecision() {
-		Decision decision = aimind.giveDecision();
-		game.playCard(decision.getCard(), this, decision.getTargetPlayer(), decision.getAdditionalParameters());
+	public Decision makeDecision() {
+		return aimind.giveDecision();
 		
 	}
 

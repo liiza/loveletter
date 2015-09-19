@@ -25,7 +25,6 @@ public class Server {
 			e.printStackTrace();
 		}
 		
-		// TODO End game somehow
 		synchronized(game) {
 			try {
 				while (true) {
@@ -35,7 +34,7 @@ public class Server {
 							game.setState(GameState.ON);
 							break;
 						case ON:
-							//game.addAIPlayer("AI-Paavo");
+							game.addAIPlayer("AI-Paavo");
 							game.dealCards(1);
 							game.setState(GameState.PLAYING);
 							break;

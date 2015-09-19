@@ -3,6 +3,7 @@ package fi.hpgame.gameLogic;
 import java.util.List;
 
 import fi.hpgame.AI.AIPlayer;
+import fi.hpgame.AI.Decision;
 import fi.hpgame.gameLogic.cards.Card;
 import fi.hpgame.messages.MessageService;
 import fi.hpgame.server.PlayerCommunication;
@@ -50,7 +51,8 @@ public class GameController {
 		playerTakeCardFromDeck(player);
 		
 		if (player.isAI()) {
-			((AIPlayer)player).makeDecision();
+			Decision decision = ((AIPlayer)player).makeDecision();
+			playCard(decision.getCard(), player, decision.getTargetPlayer(), decision.getAdditionalParameters());
 		} else {
 			askPlayerToPlayCard(player);
 		}
@@ -121,9 +123,13 @@ public class GameController {
 	public synchronized void playCard(Card card, Player player1, Player player2, String additionalParameters) {
 		try {
 			playerService.playCard(card, player1, player2, additionalParameters);
-			broadCastToPlayers((player1.getName()
-					+ " played card " + card.getName()
-					+ " against " + player2.getName()));
+			String msg = player1.getName()
+					+ " played card " + card.getName();
+			if (card.requiresTargetPlayer()) {
+				msg += " against " + player2.getName();
+			}
+			
+			broadCastToPlayers(msg);
 		
 		} catch (GameException e) {
 			e.printStackTrace();
