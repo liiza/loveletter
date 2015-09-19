@@ -33,6 +33,9 @@ public class GameController {
 		notify();
 	}
 	
+	public synchronized void newRound() throws GameException {
+		playerService.cardsDealed();
+	}
 	public synchronized void dealCards(int howMany) throws GameException {
 		for (int i = 0; i < howMany; i++) {
 			for(Player player : playerService.getPlayers()) {
@@ -41,8 +44,14 @@ public class GameController {
 		}
 		playerService.cardsDealed();
 	}
+	public synchronized void playerInTurnPlays() throws GameException {
+		Player player = playerService.getPlayerInTurn();
+		playerTakeCardFromDeck(player);
+		askPlayerToPlayCard(player);
+		
+	}
 	
-	public void playerTakeCardFromDeck(Player player) throws GameException{
+	public synchronized  void playerTakeCardFromDeck(Player player) throws GameException{
 		if (!cardService.isEmpty()){
 			Card card = cardService.getFirstCard();
 			playerService.giveCard(card, player);
@@ -50,10 +59,10 @@ public class GameController {
 		}
 
 	}
-	
-	public synchronized void askPlayerToPlayCard() throws GameException {
+
+	public synchronized void askPlayerToPlayCard(Player player) throws GameException {
 		String msg;
-		Player player = playerService.getPlayerInTurn();
+		
 		List<Card> cards = player.getCards();
 		
 		if (player.hasCard(Cards.COUNTESSA) && (player.hasCard(Cards.KING) && player.hasCard(Cards.PRINCE))) {
@@ -198,6 +207,9 @@ public class GameController {
 	public void printAllPlayerHands() {
 		broadCastToPlayers(playerService.getAllPlayerHands());
 	}
+
+
+
 
 	
 

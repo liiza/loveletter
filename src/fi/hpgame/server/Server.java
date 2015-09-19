@@ -34,8 +34,7 @@ public class Server {
 							game.setState(GameState.ON);
 							break;
 						case ON:
-							// Give two cards to each player at the beginning
-							game.dealCards(2);
+							game.dealCards(1);
 							game.setState(GameState.PLAYING);
 							break;
 						case PLAYING:
@@ -44,23 +43,20 @@ public class Server {
 								game.setState(GameState.GAMEOVER);
 								break;
 							}
-							if (game.allPlayersReady()) {
-								System.out.println("Dealing new cards");
-								game.setState(GameState.DEALNEWCARDS);
-								break;
-							}
-							game.askPlayerToPlayCard();
-							game.wait();
-							break;
-							
-						case DEALNEWCARDS:
 							if (game.deckIsEmpty()) {
+								System.out.println("Final round");
 								game.setState(GameState.FINALROUND);
 								break;
 							}
-							game.dealCards(1);
-							game.setState(GameState.PLAYING);
+							
+							if (game.allPlayersReady()) {
+								game.newRound();
+							}
+							
+							game.playerInTurnPlays();
+							game.wait();
 							break;
+						
 							
 						case FINALROUND:
 							game.broadCastToPlayers("Game is over. The winner of this round is " + game.getWinnerInLastRound());
