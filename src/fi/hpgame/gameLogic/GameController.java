@@ -3,7 +3,7 @@ package fi.hpgame.gameLogic;
 import java.util.List;
 
 import fi.hpgame.AI.AIPlayer;
-import fi.hpgame.AI.Decision;
+import fi.hpgame.AI.util.Decision;
 import fi.hpgame.gameLogic.cards.Card;
 import fi.hpgame.messages.MessageService;
 import fi.hpgame.server.PlayerCommunication;
@@ -231,6 +231,11 @@ public class GameController {
 
 	public void printAllPlayerHands() {
 		broadCastToPlayers(playerService.getAllPlayerHands());
+	}
+
+	public List<Player> getPlayers() {
+		return playerService.getPlayers();
+		
 	}
 
 

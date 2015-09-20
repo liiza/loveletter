@@ -7,7 +7,7 @@ import fi.hpgame.gameLogic.Player;
 
 public class Guard extends Card {
 
-	private static final String GUARD = "Guard";
+	public static final String GUARD = "Guard";
 	
 	private static final Cards type = Cards.GUARD;
 

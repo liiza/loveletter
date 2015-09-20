@@ -1,5 +1,6 @@
 package fi.hpgame.AI;
 
+import fi.hpgame.AI.util.Decision;
 import fi.hpgame.gameLogic.GameController;
 import fi.hpgame.gameLogic.GameEvent;
 import fi.hpgame.gameLogic.Player;

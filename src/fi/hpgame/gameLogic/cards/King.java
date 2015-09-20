@@ -8,7 +8,7 @@ import fi.hpgame.gameLogic.Player;
 
 public class King extends Card {
 
-	private static final String KING = "King";
+	public static final String KING = "King";
 	
 	private static final int points = 6;
 

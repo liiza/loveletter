@@ -3,6 +3,7 @@ package fi.hpgame.gameLogic;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
@@ -45,7 +46,7 @@ public class CardService {
 			System.out.println(card.getName());
 		}
 	}
-
+	
 	public void initDeck(GameController game) {
 		cards.clear();
 		

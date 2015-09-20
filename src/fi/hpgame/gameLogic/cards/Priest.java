@@ -6,7 +6,7 @@ import fi.hpgame.gameLogic.Player;
 
 public class Priest extends Card{
 
-	private static String PRIEST = "Priest";
+	public static String PRIEST = "Priest";
 	
 	private static int points = 2;
 

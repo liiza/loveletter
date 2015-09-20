@@ -6,7 +6,7 @@ import fi.hpgame.gameLogic.Player;
 
 public class Maid extends Card {
 
-	private static final String MAID = "Maid";
+	public static final String MAID = "Maid";
 	
 	private static final int points = 4;
 	

@@ -6,6 +6,7 @@ import fi.hpgame.gameLogic.GameException;
 import fi.hpgame.gameLogic.Player;
 
 public abstract class Card {
+	
 	protected GameController game;
 	
 	private String name;

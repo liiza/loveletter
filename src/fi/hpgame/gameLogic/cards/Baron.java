@@ -7,7 +7,7 @@ import fi.hpgame.gameLogic.Player;
 
 public class Baron extends Card {
 	
-	private static final String BARON = "Baron";
+	public static final String BARON = "Baron";
 	
 	private static final int points = 3;
 	
