@@ -59,9 +59,10 @@ public class Player {
 	}
 	
 	public void playCard(Card card, Player player2, String additionalParameters) throws GameException {
-		card.play(this, player2, additionalParameters);
 		cards.remove(card);
 		playedCards.add(card);
+		card.play(this, player2, additionalParameters);
+		
 	}
 
 	

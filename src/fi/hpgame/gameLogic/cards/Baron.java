@@ -20,24 +20,22 @@ public class Baron extends Card {
 	@Override
 	public void play(Player player1, Player player2, String additionalParameters)
 			throws GameException {
-		for (Card card : player1.getCards()) {
-			if (card.getType() != Cards.BARON) {
-				
-				Card opponent = player2.getCard(0);
-				String msgAboutBaronAction = player1.getName() + " played card " + card.getName() + " : " + card.getPoints() +
-						" against card which is " + opponent.getName() + " : " + opponent.getPoints();
-				
-				sendMessageToPlayer(msgAboutBaronAction, player2);
+		Card card = player1.getCard(0);
+			
+		Card opponent = player2.getCard(0);
+		String msgAboutBaronAction = player1.getName() + " played card " + card.getName() + " : " + card.getPoints() +
+				" against card which is " + opponent.getName() + " : " + opponent.getPoints();
+		
+		sendMessageToPlayer(msgAboutBaronAction, player2);
 
-				if (card.getPoints() > opponent.getPoints()) {
-					game.playerDropped(player2);
-				} else if (card.getPoints() < opponent.getPoints()){
-					sendMessageToPlayer(msgAboutBaronAction, player1);
-					game.playerDropped(player1);
-				}
-			}
+		if (card.getPoints() > opponent.getPoints()) {
+			game.playerDropped(player2);
+		} else if (card.getPoints() < opponent.getPoints()){
+			sendMessageToPlayer(msgAboutBaronAction, player1);
+			game.playerDropped(player1);
 		}
 	}
+		
 
 	@Override 
 	public boolean requiresTargetPlayer() {

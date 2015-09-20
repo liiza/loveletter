@@ -34,7 +34,7 @@ public class Server {
 							game.setState(GameState.ON);
 							break;
 						case ON:
-							game.addAIPlayer("AI-Paavo");
+							//game.addAIPlayer("AI-Paavo");
 							game.dealCards(1);
 							game.setState(GameState.PLAYING);
 							break;
