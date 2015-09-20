@@ -55,7 +55,7 @@ public class Server {
 							}
 							
 							game.playerInTurnPlays();
-							game.wait();
+							System.out.println("Server thread woke up after player playing the turn");
 							break;
 						
 							

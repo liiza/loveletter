@@ -1,6 +1,10 @@
 package fi.hpgame.AI;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import fi.hpgame.gameLogic.GameController;
+import fi.hpgame.gameLogic.GameEvent;
 import fi.hpgame.gameLogic.GameException;
 import fi.hpgame.gameLogic.Player;
 import fi.hpgame.gameLogic.cards.Card;
@@ -10,6 +14,8 @@ public class AIMind {
 	GameController game;
 	
 	AIPlayer aiPlayer;
+	
+	List<GameEvent> events = new ArrayList<GameEvent>();
 	
 	public AIMind(GameController game, AIPlayer aiPlayer) {
 		this.game = game;
@@ -36,6 +42,11 @@ public class AIMind {
 
 		
 		return new Decision(card, targetPlayer, extraParameters);
+	}
+
+	public void processEvent(GameEvent event) {
+		this.events.add(event);
+		
 	}
 
 }

@@ -1,6 +1,7 @@
 package fi.hpgame.AI;
 
 import fi.hpgame.gameLogic.GameController;
+import fi.hpgame.gameLogic.GameEvent;
 import fi.hpgame.gameLogic.Player;
 
 public class AIPlayer extends Player {
@@ -19,6 +20,9 @@ public class AIPlayer extends Player {
 	public Decision makeDecision() {
 		return aimind.giveDecision();
 		
+	}
+	public void newEvent(GameEvent event){
+		aimind.processEvent(event);
 	}
 
 	

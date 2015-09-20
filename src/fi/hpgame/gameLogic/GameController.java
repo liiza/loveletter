@@ -46,7 +46,7 @@ public class GameController {
 		}
 		playerService.cardsDealed();
 	}
-	public synchronized void playerInTurnPlays() throws GameException {
+	public synchronized void playerInTurnPlays() throws GameException, InterruptedException {
 		Player player = playerService.getPlayerInTurn();
 		playerTakeCardFromDeck(player);
 		
@@ -55,6 +55,7 @@ public class GameController {
 			playCard(decision.getCard(), player, decision.getTargetPlayer(), decision.getAdditionalParameters());
 		} else {
 			askPlayerToPlayCard(player);
+			wait();
 		}
 	
 		
@@ -123,13 +124,9 @@ public class GameController {
 	public synchronized void playCard(Card card, Player player1, Player player2, String additionalParameters) {
 		try {
 			playerService.playCard(card, player1, player2, additionalParameters);
-			String msg = player1.getName()
-					+ " played card " + card.getName();
-			if (card.requiresTargetPlayer()) {
-				msg += " against " + player2.getName();
-			}
 			
-			broadCastToPlayers(msg);
+			signallToAllPlayers(GameEvent.buildPlayCard(card, player1, player2, additionalParameters));
+			
 		
 		} catch (GameException e) {
 			e.printStackTrace();
@@ -137,6 +134,15 @@ public class GameController {
 		
 		notify();
 	}
+	
+	private void signallToAllPlayers(GameEvent event) throws GameException {
+		for (Player aiPlayer : playerService.getAllAIPlayers()) {
+			((AIPlayer)aiPlayer).newEvent(event);
+		}
+		this.broadCastToPlayers(event.getMessage());
+		
+	}
+
 	public synchronized boolean allPlayersReady() {
 		return playerService.allPlayersReady();
 	}
