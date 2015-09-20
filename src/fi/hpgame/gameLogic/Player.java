@@ -61,7 +61,14 @@ public class Player {
 	public void playCard(Card card, Player player2, String additionalParameters) throws GameException {
 		cards.remove(card);
 		playedCards.add(card);
-		card.play(this, player2, additionalParameters);
+		
+		boolean targetPlayerIsItself = this.equals(player2);
+		boolean cardIsNotMaid = !card.getType().equals(Cards.MAID);
+		boolean userIsTryingToAttackHimSelf = targetPlayerIsItself && cardIsNotMaid;
+		if (!userIsTryingToAttackHimSelf) {
+			card.play(this, player2, additionalParameters);
+		}
+		
 		
 	}
 

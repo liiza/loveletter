@@ -20,6 +20,7 @@ public class Baron extends Card {
 	@Override
 	public void play(Player player1, Player player2, String additionalParameters)
 			throws GameException {
+		
 		Card card = player1.getCard(0);
 			
 		Card opponent = player2.getCard(0);
