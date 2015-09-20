@@ -12,6 +12,8 @@ public class Player {
 	private String name;
 	
 	private List<Card> cards =  new ArrayList<Card>();
+	
+	private List<Card> playedCards = new ArrayList<Card>();
 
 	private boolean protection = false;
 
@@ -33,6 +35,10 @@ public class Player {
 		cards.add(card);
 		
 	}
+	public void setCards(List<Card> cards) {
+		this.cards = cards;
+	}
+	
 	public List<Card> getCards() {
 		return this.cards;
 	}
@@ -45,21 +51,27 @@ public class Player {
 		return hand;
 	}
 	
+	public List<Card> getPlayedCards() {
+		return this.playedCards;
+	}
+	public void emptyPlayedCards() {
+		this.playedCards.clear();
+	}
+	
 	public void playCard(Card card, Player player2, String additionalParameters) throws GameException {
 		card.play(this, player2, additionalParameters);
 		cards.remove(card);
+		playedCards.add(card);
 	}
 
-	public void setCards(List<Card> cards) {
-		this.cards = cards;
-	}
+	
 
 	public void setProtection(boolean protection) {
 		this.protection = protection;
 	}
 	
 	public boolean hasProtection() {
-		return protection ;
+		return protection;
 	}
 
 	public Card getCard(int cardIndex) throws GameException {
@@ -89,6 +101,7 @@ public class Player {
 	}
 	
 	public void discardCards() {
+		this.playedCards.addAll(cards);
 		this.cards.clear();
 	}
 

@@ -149,6 +149,7 @@ public class PlayerService {
 			player.setStillPlaying(true);
 			player.setProtection(false);
 			player.setCards(new ArrayList<Card>());
+			player.emptyPlayedCards();
 		}
 		
 	}
