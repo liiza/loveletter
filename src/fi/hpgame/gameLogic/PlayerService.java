@@ -116,9 +116,7 @@ public class PlayerService {
 		if (!player1.hasCard(card.getType())) {
 			throw new GameException("Trying to play a card that user doesn't have.");
 		}
-		if (player1.hasProtection()) {
-			player1.setProtection(false);
-		}
+		
 		player1.playCard(card, player2, additionalParameters);
 		playerInTurn++;
 		
@@ -194,6 +192,16 @@ public class PlayerService {
 			hands += player.getName() + " :" + player.getHand();
 		}
 		return hands;
+	}
+
+	public List<Player> getPlayersWithoutProtection() {
+		List<Player> playersWithoutProtection = new ArrayList<Player>();
+		for (Player player : players) {
+			if (!player.hasProtection()) {
+				playersWithoutProtection.add(player);
+			}
+		}
+		return playersWithoutProtection;
 	}
 
 	

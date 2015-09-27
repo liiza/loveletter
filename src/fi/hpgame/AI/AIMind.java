@@ -50,15 +50,27 @@ public class AIMind {
 	public Decision giveDecision() {
 		List<Decision> decisions = new ArrayList<Decision>();
 		
-		for (Card card : aiPlayer.getCards()) {
-			for (Player player: game.getPlayers()){
-				if (!player.hasProtection()) {
-					for (Cards cardType: Cards.values()) {
-						decisions.add(getDecisionWithAdvisability(card, player, cardType));
+		boolean allOtherPlayersHaveProtection = game.getPlayersWithoutProtection().size() == 1 && game.getPlayersWithoutProtection().get(0) == aiPlayer;
+		if (allOtherPlayersHaveProtection ) {
+			for (Card card : aiPlayer.getCards()) {
+				for (Cards cardType: Cards.values()) {
+					decisions.add(getDecisionWithAdvisability(card, aiPlayer, cardType));
+				}
+			}
+		} 
+		else {
+			for (Card card : aiPlayer.getCards()) {
+				for (Player player: game.getPlayersWithoutProtection()){
+					if (!player.hasProtection() && (card.getType() != Cards.MAID && player != aiPlayer)) {
+						for (Cards cardType: Cards.values()) {
+							decisions.add(getDecisionWithAdvisability(card, player, cardType));
+						}
 					}
 				}
 			}
+			
 		}
+	
 		
 		return bestDecision(decisions);
 	}
@@ -95,9 +107,7 @@ public class AIMind {
 				}
 				return new Decision(card, null, null, advisibality);	
 			case GUARD:
-				// Playing Guard is usually a good idea. Even though there would
-				//be zero probability for other player holding the card it is still better than playing princess
-				advisibality = getProbabilityForCardType(cardType) + 0.1;
+				advisibality = Math.min(getProbabilityForCardType(cardType) + 0.1, 0.9);
 				return new Decision(card, targetPlayer, cardType.name, advisibality);
 				
 			default:

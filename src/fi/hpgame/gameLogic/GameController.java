@@ -49,7 +49,9 @@ public class GameController {
 	public synchronized void playerInTurnPlays() throws GameException, InterruptedException {
 		Player player = playerService.getPlayerInTurn();
 		playerTakeCardFromDeck(player);
-		
+		if (player.hasProtection()) {
+			player.setProtection(false);
+		}
 		if (player.isAI()) {
 			Decision decision = ((AIPlayer)player).makeDecision();
 			playCard(decision.getCard(), player, decision.getTargetPlayer(), decision.getAdditionalParameters());
@@ -236,6 +238,10 @@ public class GameController {
 	public List<Player> getPlayers() {
 		return playerService.getPlayers();
 		
+	}
+	
+	public List<Player> getPlayersWithoutProtection(){
+		return playerService.getPlayersWithoutProtection();
 	}
 
 
