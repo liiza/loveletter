@@ -30,6 +30,7 @@ public class Baron extends Card {
 		sendMessageToPlayer(msgAboutBaronAction, player2);
 
 		if (card.getPoints() > opponent.getPoints()) {
+			sendMessageToPlayer(msgAboutBaronAction, player1);
 			game.playerDropped(player2);
 		} else if (card.getPoints() < opponent.getPoints()){
 			sendMessageToPlayer(msgAboutBaronAction, player1);

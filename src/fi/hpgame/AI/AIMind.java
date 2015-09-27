@@ -110,10 +110,22 @@ public class AIMind {
 				advisibality = Math.min(getProbabilityForCardType(cardType) + 0.1, 0.9);
 				return new Decision(card, targetPlayer, cardType.name, advisibality);
 				
+			case BARON:
+				advisibality = AILogic.advisibalityToPlayBaron(getCardToUseInBaronAttack(aiPlayer), AILogic.getProbabilitiesForCardTypes(cardsPlayedOrInOwnHand())); 
+				return new Decision(card, targetPlayer, cardType.name, advisibality);
 			default:
 				return new Decision(card, targetPlayer, cardType.name, advisibality);
 		}
 	
+	}
+
+	private Card getCardToUseInBaronAttack(AIPlayer player) {
+		for (Card card : player.getCards()) {
+			if (card.getType()!= Cards.BARON) {
+				return card;
+			}
+		}
+		return player.getCards().get(0);
 	}
 
 	private Double getProbabilityForCardType(Cards type) {

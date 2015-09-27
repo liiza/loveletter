@@ -1,10 +1,13 @@
 package fi.hpgame.AI.util;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import fi.hpgame.gameLogic.Cards;
 import fi.hpgame.gameLogic.GameException;
+import fi.hpgame.gameLogic.Player;
 import fi.hpgame.gameLogic.cards.*;
 
 
@@ -57,5 +60,68 @@ public final class AILogic {
 		int cardsPlayedOfType = cardsPlayed.get(cardType);
 		probabilities.put(cardType, (initialAmount - cardsPlayedOfType)/ (double)cardsInDeck);
 		
+	}
+
+	public static Double advisibalityToPlayBaron(Card card, Map<Cards, Double> probabilities) {
+		Double a = 0.0;
+		switch(card.getType()) {
+			case PRINCESS:
+				a = 0.9;
+			case COUNTESSA:
+				a = 0.8;
+				if (isNoLongerInGame(probabilities, Cards.PRINCESS)) {
+					a = 0.9;
+				}
+			case KING:
+				if (isNoLongerInGame(probabilities, Cards.PRINCESS, Cards.COUNTESSA)) {
+					a = 0.9;
+				} else if (isNoLongerInGame(probabilities, Cards.PRINCESS) || isNoLongerInGame(probabilities, Cards.COUNTESSA)){
+					a = 0.8;
+				} else {
+					a = 0.7;
+				}
+			case PRINCE:
+				if (isNoLongerInGame(probabilities, Cards.PRINCESS, Cards.COUNTESSA, Cards.KING)) {
+					a = 0.9;
+				} else if (isNoLongerInGame(probabilities, Cards.PRINCESS) || isNoLongerInGame(probabilities, Cards.COUNTESSA) || isNoLongerInGame(probabilities, Cards.KING) ){
+					a = 0.6;
+				} else {
+					a = 0.5;
+				}
+			case BARON:
+				if (isNoLongerInGame(probabilities, Cards.PRINCESS, Cards.COUNTESSA, Cards.KING, Cards.PRINCE)) {
+					a = 0.9;
+				} else {
+					a= 0.5;
+				}
+			case PRIEST:
+				if (isNoLongerInGame(probabilities, Cards.PRINCESS, Cards.COUNTESSA, Cards.KING, Cards.PRINCE, Cards.BARON)) {
+					a = 0.9;
+				} else {
+					a= 0.1;
+				}
+			case MAID:
+				if (isNoLongerInGame(probabilities, Cards.PRINCESS, Cards.COUNTESSA, Cards.KING, Cards.PRINCE, Cards.BARON, Cards.PRIEST)) {
+					a = 0.9;
+				} else {
+					a= 0.1;
+				}
+			case GUARD:
+				if (isNoLongerInGame(probabilities, Cards.PRINCESS, Cards.COUNTESSA, Cards.KING, Cards.PRINCE, Cards.BARON, Cards.MAID)) {
+					a = 0.9;
+				} else {
+					a= 0.1;
+				}
+			
+		}
+		return a;
+	}
+
+	private static boolean isNoLongerInGame(Map<Cards, Double> probabilities, Cards... types) {
+		boolean isNoLongerInGame = true;
+		for (Cards cardType : types) {
+			isNoLongerInGame = isNoLongerInGame && (probabilities.get(cardType) == 0.0);
+		}
+		return isNoLongerInGame;
 	}
 }
