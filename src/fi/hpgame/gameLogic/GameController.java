@@ -81,7 +81,7 @@ public class GameController {
 		
 		List<Card> cards = player.getCards();
 		
-		if (player.hasCard(Cards.COUNTESSA) && (player.hasCard(Cards.KING) && player.hasCard(Cards.PRINCE))) {
+		if (player.hasCard(Cards.COUNTESSA) && (player.hasCard(Cards.KING) || player.hasCard(Cards.PRINCE))) {
 			msg = "You must play card Countessa. ";
 			for (int i = 0; i < cards.size(); i++) {
 				if ( cards.get(i).getType() == Cards.COUNTESSA) {
