@@ -55,7 +55,7 @@ public final class AILogic {
 	private static void addProbability(Cards cardType, HashMap<Cards, Double> probabilities,
 			int initialAmount, Map<Cards, Integer> cardsPlayed, int cardsInDeck) {
 		int cardsPlayedOfType = cardsPlayed.get(cardType);
-		probabilities.put(cardType, (double) ((initialAmount - cardsPlayedOfType)/cardsInDeck));
+		probabilities.put(cardType, (initialAmount - cardsPlayedOfType)/ (double)cardsInDeck);
 		
 	}
 }

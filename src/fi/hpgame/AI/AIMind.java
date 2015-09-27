@@ -132,14 +132,17 @@ public class AIMind {
 	}
 	
 	private Decision bestDecision(List<Decision> decisions) {
-	
+
+		for (Decision decision :decisions ) {
+			System.out.println(decision.toString());
+		}
 		Collections.sort(decisions, new Comparator<Decision>() {
 		    public int compare(Decision d1, Decision d2) {
 		        return Double.compare(d1.getAdvisableValue(), d2.getAdvisableValue());
 		    }	
 		});
 
-		return decisions.get(0);
+		return decisions.get(decisions.size() - 1);
 	}
 	
 

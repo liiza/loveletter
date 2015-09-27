@@ -44,17 +44,18 @@ public class Server {
 								game.setState(GameState.GAMEOVER);
 								break;
 							}
+							
+							
+							if (game.allPlayersReady()) {
+								game.newRound();
+							}
+							Player player = game.playerInTurnTakeACard();
 							if (game.deckIsEmpty()) {
 								System.out.println("Final round");
 								game.setState(GameState.FINALROUND);
 								break;
 							}
-							
-							if (game.allPlayersReady()) {
-								game.newRound();
-							}
-							
-							game.playerInTurnPlays();
+							game.playerPlays(player);
 							System.out.println("Server thread woke up after player playing the turn");
 							break;
 						

@@ -46,9 +46,13 @@ public class GameController {
 		}
 		playerService.cardsDealed();
 	}
-	public synchronized void playerInTurnPlays() throws GameException, InterruptedException {
+	public synchronized Player playerInTurnTakeACard() throws GameException{
 		Player player = playerService.getPlayerInTurn();
 		playerTakeCardFromDeck(player);
+		return player;
+	}
+	
+	public synchronized void playerPlays(Player player) throws GameException, InterruptedException {
 		if (player.hasProtection()) {
 			player.setProtection(false);
 		}

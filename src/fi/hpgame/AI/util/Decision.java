@@ -37,5 +37,18 @@ public class Decision {
 	public void setAdvisableValue(Double advisableValue) {
 		this.advisableValue = advisableValue;
 	}
-
+	@Override
+	public String toString() {
+		String s = card.getName() + " ";
+		if (targetPlayer != null ) {
+			s += targetPlayer.getName() + " ";
+		}
+		if (extraParameters != null) {
+			s += extraParameters + " ";
+		}
+		s += advisableValue;
+		
+		return s;
+		
+	}
 }
