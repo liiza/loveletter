@@ -175,6 +175,7 @@ public class GameController {
 
 	}
 	public void playerDropped(Player player) {
+		player.discardCards();
 		playerService.playerDropped(player);
 		broadCastToPlayers("Player player " + player.getName() + " dropped out."); 
 		

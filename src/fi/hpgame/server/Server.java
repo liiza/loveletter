@@ -19,6 +19,8 @@ public class Server {
 		GameController game = GameController.initGame();
 		game.setState(GameState.PREPARATION);
 		game.addAIPlayer("AI-Paavo");
+		game.addAIPlayer("AI-Mari");
+
 
 		try {
 			new Thread(new ListenerThread(new ServerSocket(portNumber), game)).start();
