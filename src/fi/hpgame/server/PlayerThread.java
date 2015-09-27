@@ -38,7 +38,13 @@ public class PlayerThread implements Runnable {
 				if (userInput == null || userInput.equals("end")) {
 					quitGame(player);
 				} else if (userInput.equals("start")) {
-					startGame();
+					if (player == null) {
+						playerSocket.write("Give your name first");
+					}
+					else {
+						startGame();	
+					}
+					
 				} else {
 					if (player == null) {
 						player = joinGame(userInput);

@@ -15,6 +15,9 @@ public class AIPlayer extends Player {
 		this.game = game;
 		this.aimind = new AIMind(game, this);
 	}
+	public void resetMind(){
+		this.aimind = new AIMind(game, this);
+	}
 	public boolean isAI() {
 		return true;
 	}

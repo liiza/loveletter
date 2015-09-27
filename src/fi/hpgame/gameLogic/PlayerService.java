@@ -5,6 +5,7 @@ import java.util.Collections;
 import java.util.List;
 import java.util.function.Predicate;
 
+import fi.hpgame.AI.AIPlayer;
 import fi.hpgame.gameLogic.cards.Card;
 
 public class PlayerService {
@@ -156,6 +157,9 @@ public class PlayerService {
 			player.setProtection(false);
 			player.setCards(new ArrayList<Card>());
 			player.emptyPlayedCards();
+			if (player.isAI()) {
+				((AIPlayer)player).resetMind();
+			}
 		}
 		
 	}

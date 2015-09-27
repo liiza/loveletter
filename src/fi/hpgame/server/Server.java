@@ -18,6 +18,7 @@ public class Server {
 		
 		GameController game = GameController.initGame();
 		game.setState(GameState.PREPARATION);
+		game.addAIPlayer("AI-Paavo");
 
 		try {
 			new Thread(new ListenerThread(new ServerSocket(portNumber), game)).start();
@@ -34,7 +35,7 @@ public class Server {
 							game.setState(GameState.ON);
 							break;
 						case ON:
-							game.addAIPlayer("AI-Paavo");
+							
 							game.dealCards(1);
 							game.setState(GameState.PLAYING);
 							break;
@@ -44,7 +45,6 @@ public class Server {
 								game.setState(GameState.GAMEOVER);
 								break;
 							}
-							
 							
 							if (game.allPlayersReady()) {
 								game.newRound();
@@ -68,8 +68,7 @@ public class Server {
 							break;
 							
 						case GAMEOVER:
-							
-							game.wait();
+							game.setState(GameState.PREPARATION);
 							break;
 							
 						default:
