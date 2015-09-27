@@ -10,44 +10,52 @@ import fi.hpgame.gameLogic.cards.*;
 
 public final class AILogic {
 
-	public static final Double cardsInDeck = 16.0;
-
+	public static final int initialCards = 16;
 	
-	public static Map<Cards, Double> getProbabilitiesAtBeginning() throws GameException {
+	public static Map<Cards, Double> getProbabilitiesForCardTypes(Map<Cards, Integer> cardsPlayed){
+		int cardsLeft = initialCards -  cardsPlayed.size();
 		HashMap<Cards, Double> probabilities = new HashMap<Cards, Double>();
 		for (Cards cardType : Cards.values()) {
+			
 			switch (cardType) {
 				case PRINCESS:
-					probabilities.put(cardType, Princess.howMany/cardsInDeck);
+					addProbability(cardType, probabilities, Princess.howMany, cardsPlayed, cardsLeft);
 					
 				case KING:
-					probabilities.put(cardType, King.howMany/cardsInDeck);
-				
+					addProbability(cardType, probabilities, King.howMany, cardsPlayed, cardsLeft);
+
 				case PRINCE:
-					probabilities.put(cardType, Prince.howMany/cardsInDeck);
-				
+					addProbability(cardType, probabilities, Prince.howMany, cardsPlayed, cardsLeft);
+
 				case COUNTESSA:
-					probabilities.put(cardType, Countess.howMany/cardsInDeck);
+					addProbability(cardType, probabilities, Countess.howMany, cardsPlayed, cardsLeft);
 				
 				case PRIEST:
-					probabilities.put(cardType, Priest.howMany/cardsInDeck);
+					addProbability(cardType, probabilities, Priest.howMany, cardsPlayed, cardsLeft);
 				
 				case GUARD:
-					probabilities.put(cardType, Guard.howMany/cardsInDeck);
+					addProbability(cardType, probabilities, Guard.howMany, cardsPlayed, cardsLeft);
 				
 				case MAID:
-					probabilities.put(cardType, Maid.howMany/cardsInDeck);
+					addProbability(cardType, probabilities, Maid.howMany, cardsPlayed, cardsLeft);
 				
 				case BARON:
-					probabilities.put(cardType, Baron.howMany/cardsInDeck);
+					addProbability(cardType, probabilities, Baron.howMany, cardsPlayed, cardsLeft);
 					
 				default:
-					throw new GameException("Non existing card type");
+					
 					
 			}
 		
 		}
 		return probabilities;
 
+	}
+
+	private static void addProbability(Cards cardType, HashMap<Cards, Double> probabilities,
+			int initialAmount, Map<Cards, Integer> cardsPlayed, int cardsInDeck) {
+		int cardsPlayedOfType = cardsPlayed.get(cardType);
+		probabilities.put(cardType, (double) ((initialAmount - cardsPlayedOfType)/cardsInDeck));
+		
 	}
 }
