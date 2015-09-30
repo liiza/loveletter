@@ -102,7 +102,15 @@ public class PlayerService {
 
 	public boolean allPlayersReady() {
 		System.out.println(playerInTurn + " == " + players.size());
-		return playerInTurn == players.size();
+		int nextPlayerToPlay = playerInTurn;
+		
+		while (nextPlayerToPlay < players.size()) {
+			if (players.get(nextPlayerToPlay).isStillPlaying()) {
+				return false;
+			}
+			nextPlayerToPlay++;
+		}
+		return true;
 	}
 	
 	public boolean isPlayerInTurn(Player player) {
