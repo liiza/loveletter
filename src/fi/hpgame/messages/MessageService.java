@@ -12,6 +12,19 @@ import fi.hpgame.gameLogic.Player;
  */
 public class MessageService {
 	
+	private static MessageService messageService;
+	
+	private MessageService(){
+		
+	}
+	
+	public static MessageService getInstance() {
+		if (messageService == null) {
+			messageService = new MessageService();
+		}
+		return messageService;
+	}
+	
 	// List is not synchronized since we need to handle the synchronization manually
 	private List<Message> messages = new ArrayList<Message>();
 	
@@ -65,5 +78,7 @@ public class MessageService {
 		return null;
 		
 	}
+
+
 
 }

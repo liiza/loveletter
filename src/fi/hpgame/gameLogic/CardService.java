@@ -22,7 +22,21 @@ public class CardService {
 
 
 	private List<Card> cards = Collections.synchronizedList(new ArrayList<Card>());
+	
+	private static CardService cardService;
 
+	private CardService() {
+		
+	}
+	
+	public static CardService getInstace() {
+		if (cardService == null) {
+			cardService = new CardService();			
+		}
+		return cardService;
+	}
+	
+	
 	public void addCard(Card card) {
 		cards.add(card);
 	}

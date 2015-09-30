@@ -16,7 +16,7 @@ public class Server {
 		
 		System.out.println("Let the game begin.");
 		
-		GameController game = GameController.initGame();
+		GameController game = GameController.getInstance();
 		game.setState(GameState.PREPARATION);
 		game.addAIPlayer("AI-Paavo");
 		game.addAIPlayer("AI-Mari");

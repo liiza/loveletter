@@ -12,11 +12,13 @@ import fi.hpgame.server.WriterThread;
 public class GameController {
 	
 	
-	private MessageService msgService = new MessageService();
+	private static GameController game;
+
+	private MessageService msgService = MessageService.getInstance();
 	
-	private CardService cardService = new CardService();
+	private CardService cardService = CardService.getInstace();
 	
-	private PlayerService playerService = new PlayerService();
+	private PlayerService playerService = PlayerService.getInstance();
 
 	private GameState state;
 	
@@ -24,8 +26,10 @@ public class GameController {
 		
 	}
 	
-	public static synchronized GameController initGame(){
-		GameController game = new GameController();
+	public static synchronized GameController getInstance(){
+		if (game == null) {
+			game = new GameController();	
+		}
 		return game;
 	}
 	

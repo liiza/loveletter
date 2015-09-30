@@ -13,6 +13,20 @@ public class PlayerService {
 	private List<Player> players = Collections.synchronizedList((new ArrayList<Player>()));
 	
 	private int playerInTurn;
+
+	private static PlayerService playerService;
+	
+	private PlayerService() {
+		
+	}
+	
+	public static PlayerService getInstance() {
+		if (playerService == null) {
+			playerService = new PlayerService();			
+		}
+		return playerService;
+	}
+	
 	
 	public void addPlayer(Player player) {
 		players.add(player);

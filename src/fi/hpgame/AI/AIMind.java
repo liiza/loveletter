@@ -61,7 +61,9 @@ public class AIMind {
 		else {
 			for (Card card : aiPlayer.getCards()) {
 				for (Player player: game.getPlayersWithoutProtection()){
-					if (!player.hasProtection() && (card.getType() != Cards.MAID && player != aiPlayer)) {
+					boolean targetIsThisPlayer = (player == aiPlayer);
+					if ((!player.hasProtection() && player.isStillPlaying() && !targetIsThisPlayer ) 
+							|| (targetIsThisPlayer && card.getType() == Cards.MAID)){
 						for (Cards cardType: Cards.values()) {
 							decisions.add(getDecisionWithAdvisability(card, player, cardType));
 						}
